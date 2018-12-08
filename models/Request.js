@@ -14,11 +14,11 @@ const RequestSchema = new Schema({
     name: {
       type: String,
       default: 'database student'
-    },
-    className: {
-      type: String,
-      required: true
     }
+  },
+  className: {
+    type: String,
+    required: true
   },
   labNumber: {
     type: String,

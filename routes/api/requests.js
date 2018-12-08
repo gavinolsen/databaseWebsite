@@ -19,8 +19,8 @@ const validateRequestInput = require('../../validation/request');
 router.get('/test', (req, res) => res.json({ msg: 'requests works' }));
 
 /**
- * @route   GET api/requests/325
- * @desc    get the requests for the 325 class
+ * @route   GET api/requests/
+ * @desc    get the requests for the class
  * @access  Public
  */
 router.get('/', (req, res) => {
@@ -29,6 +29,50 @@ router.get('/', (req, res) => {
       const errors = {};
       if (!requests) {
         errors.norequests = 'there are no requests';
+        return res.status(404).json(errors);
+      }
+      //and return the requests
+      res.json(requests);
+    })
+    .catch(err => {
+      errors.catch = 'an error was caught';
+      return res.status(404).json(errors, err);
+    });
+});
+
+/**
+ * @route   GET api/requests/225
+ * @desc    get the requests for the 225 class
+ * @access  Public
+ */
+router.get('/225', (req, res) => {
+  Request.find({ className: '225' })
+    .then(requests => {
+      const errors = {};
+      if (!requests) {
+        errors.norequests = 'there are no requests for 325';
+        return res.status(404).json(errors);
+      }
+      //and return the requests
+      res.json(requests);
+    })
+    .catch(err => {
+      errors.catch = 'an error was caught';
+      return res.status(404).json(errors, err);
+    });
+});
+
+/**
+ * @route   GET api/requests/325
+ * @desc    get the requests for the 325 class
+ * @access  Public
+ */
+router.get('/325', (req, res) => {
+  Request.find({ className: '325' })
+    .then(requests => {
+      const errors = {};
+      if (!requests) {
+        errors.norequests = 'there are no requests for 325';
         return res.status(404).json(errors);
       }
       //and return the requests
@@ -62,9 +106,9 @@ router.post(
     const newRequest = new Request({
       userInfo: {
         _id: req.user.id,
-        name: req.user.name,
-        className: req.user.className
+        name: req.user.name
       },
+      className: req.user.className,
       labNumber: req.body.labNumber,
       comment: req.body.comment
     });
@@ -105,20 +149,16 @@ router.delete(
           return res.status(404).json(errors);
         }
 
-        if (request.userInfo._id.toString() !== req.user._id.toString()) {
+        console.log(req.user);
+
+        //this will work for now
+        if (
+          request.userInfo._id.toString() !== req.user._id.toString() &&
+          !req.user.isAdmin
+        ) {
           //the user isn't authorized for this
           errors.noauth = 'you are not authorized to delete that request';
           return res.status(403).json(errors);
-        } else if (req.user.isAdmin) {
-          //i think that there could be a big exploit here
-          //if they could change their request
-          console.log({ msg: 'user is authorized' });
-          request
-            .remove()
-            .then(() => {
-              return res.json({ msg: 'user deleted by authorized user' });
-            })
-            .catch(err => res.json(err));
         }
         //the request can now be deleted
         request
@@ -132,17 +172,5 @@ router.delete(
       });
   }
 );
-
-/**
- * @route   POST api/requests/
- * @desc    make a request
- * @access  Private
- */
-
-/**
- * @route   DELETE api/requests/:id
- * @desc    delete a request
- * @access  Private
- */
 
 module.exports = router;
