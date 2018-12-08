@@ -10,6 +10,10 @@ const User = require('../../models/User');
 //register the user
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
+
+//get the keys
+const keys = require('../../config/keys');
+
 /**
  * @route   GET api/users/test
  * @desc    Test users route
@@ -53,18 +57,39 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //start here
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  //////////////////////////////////////////////////
-  User.findOne({ email }).then(user => {});
+  User.findOne({ email }).then(user => {
+    if (!user) {
+      errors.email = 'no user associated with that email';
+      return res.status(404).json(errors);
+    }
+
+    //a user exists, so check the password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+        //sign the token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            if (err) throw err;
+
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
+          }
+        );
+      } else {
+        errors.password = 'incorrect password';
+        return res.status(400).json(errors);
+      }
+    });
+  });
 });
 
 /**
