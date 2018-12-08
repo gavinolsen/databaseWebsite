@@ -28,11 +28,16 @@ mongoose
 //make sure we put passport configuration in
 //here as well as ./config/passport.js..
 
+//middleware
+app.use(passport.initialize());
+//setup
+require('./config/passport')(passport);
+
 //and set up the port directories
 //with the models we brought in
 app.use('/api/users', users);
 app.use('/api/requests', requests);
 
 //and listen
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server started on port ${port}`));

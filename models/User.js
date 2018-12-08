@@ -13,11 +13,11 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  class_name: {
+  className: {
     type: String,
     required: true
   },
-  number_of_requests: {
+  numberOfRequests: {
     type: Number,
     default: 0
   },
