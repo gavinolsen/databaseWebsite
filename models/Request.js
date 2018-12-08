@@ -6,17 +6,21 @@ const Schema = mongoose.Schema;
 //user's id. I"ll add the classname in ther
 //too, as well as the lab
 const RequestSchema = new Schema({
-  user_info: {
-    user_id: {
+  userInfo: {
+    _id: {
       type: String,
       required: true
     },
-    user_class: {
+    name: {
+      type: String,
+      default: 'database student'
+    },
+    className: {
       type: String,
       required: true
     }
   },
-  lab_number: {
+  labNumber: {
     type: String,
     default: '1'
   },

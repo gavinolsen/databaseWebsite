@@ -22,8 +22,8 @@ module.exports = passport => {
         .then(user => {
           if (user) {
             //there's no error, and give back the user
-            console.log(jwt_payload);
-            console.log(user);
+            //console.log(jwt_payload);
+            //console.log(user);
             return done(null, user);
           }
           return done(null, false);

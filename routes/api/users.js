@@ -22,11 +22,30 @@ const keys = require('../../config/keys');
 router.get('/test', (req, res) => res.json({ msg: 'users works' }));
 
 /**
- * @route   GET api/users/
+ * @route   GET api/users/all
  * @desc    get all the current users of the app
  * @access  Private
  */
-router.get('/');
+router.get(
+  '/all',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    User.find({})
+      .then(users => {
+        if (!users) {
+          errors.nousers = 'there are no users';
+          return res.status(404).json(errors);
+        }
+        res.json(users);
+      })
+      .catch(() => {
+        errors.nousers = 'there are no users';
+        return res.status(404).json(errors);
+      });
+  }
+);
 
 /**
  * @route   GET api/users/225
@@ -34,13 +53,71 @@ router.get('/');
  *          in the class 225
  * @access  Private
  */
+router.get(
+  '/225',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    User.find({ className: '225' })
+      .then(users => {
+        if (!users) {
+          errors.nousers = 'there are no users';
+          return res.status(404).json(errors);
+        }
+        res.json(users);
+      })
+      .catch(() => {
+        errors.nousers = 'there are no users';
+        return res.status(404).json(errors);
+      });
+  }
+);
 
 /**
  * @route   GET api/users/325
- * @desc    get all the current users of the app
- *          in the class 325
+ * @desc    get all the 325 users
  * @access  Private
  */
+router.get(
+  '/325',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    User.find({ className: '325' })
+      .then(users => {
+        if (!users) {
+          errors.nousers = 'there are no users';
+          return res.status(404).json(errors);
+        }
+        res.json(users);
+      })
+      .catch(() => {
+        errors.nousers = 'there are no users';
+        return res.status(404).json(errors);
+      });
+  }
+);
+
+/**
+ * @route   GET api/users/current
+ * @desc    get the current user's data
+ * @access  Private
+ */
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      className: req.user.className,
+      numberOfRequests: req.user.numberOfRequests
+    });
+  }
+);
 
 /**
  * @route   POST api/users/login
@@ -118,6 +195,11 @@ router.post('/register', (req, res) => {
       className: req.body.className
     });
 
+    //this works
+    if (req.body.email.toString() === 'mclaughlinm@byui.edu') {
+      newUser.isAdmin = true;
+    }
+
     //generate the users salt
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -134,14 +216,28 @@ router.post('/register', (req, res) => {
 });
 
 /**
- * @route   GET api/users/
- * @desc    get all the current users of the app
+ * @route   Delete api/users/:id
+ * @desc    delete the current users profile
  * @access  Private
  */
-/**
- * @route   GET api/users/
- * @desc    get all the current users of the app
- * @access  Private
- */
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    User.findById(req.params.id)
+      .then(user => {
+        //authenticate the user
+        if (user._id.toString() !== req.user.id) {
+          errors.notauthorized = 'user not authorized';
+          return res.status(401).json(errors);
+        }
+        user.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err =>
+        res.status(404).json({ usernotfound: 'no user found with that id' })
+      );
+  }
+);
 
 module.exports = router;
