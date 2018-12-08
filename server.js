@@ -13,7 +13,17 @@ app.use(body_parser.json());
 const users = require('./routes/api/users');
 const requests = require('./routes/api/requests');
 
+const mongoURI = require('./config/keys').mongoURI;
+
 //connect with mongoose after internet is up..
+
+mongoose
+  .connect(
+    mongoURI,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('mongo db connected successfully'))
+  .catch(err => console.log(err));
 
 //make sure we put passport configuration in
 //here as well as ./config/passport.js..
