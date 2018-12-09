@@ -37,3 +37,8 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.submitBtn {
+  background-color: #31e94b;
+  color: #000000;
+}
