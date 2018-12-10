@@ -10,6 +10,7 @@ class Register extends Component {
     this.state = {
       name: '',
       email: '',
+      className: '',
       password: '',
       password2: '',
       errors: {}
@@ -35,6 +36,7 @@ class Register extends Component {
     const newUser = {
       name: this.state.name,
       email: this.state.email,
+      className: this.state.className,
       password: this.state.password,
       password2: this.state.password2
     };
@@ -75,7 +77,7 @@ class Register extends Component {
                   <input
                     type='email'
                     className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.name
+                      'is-invalid': errors.email
                     })}
                     placeholder='Email Address'
                     value={this.state.email}
@@ -83,11 +85,25 @@ class Register extends Component {
                     onChange={this.onChange}
                   />
                 </div>
+                <div className='lead text-center'>Class</div>
+                <div className='form-group'>
+                  <select
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.className
+                    })}
+                    value={this.state.className}
+                    onChange={this.onChange}
+                    name='className'
+                  >
+                    <option value='225'>225</option>
+                    <option value='325'>325</option>
+                  </select>
+                </div>
                 <div className='form-group'>
                   <input
                     type='password'
                     className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.name
+                      'is-invalid': errors.password
                     })}
                     placeholder='Password'
                     name='password'

@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
+//https://reactjs.org/docs/conditional-rendering.html
+
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
