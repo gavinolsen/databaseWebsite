@@ -154,7 +154,6 @@ router.post('/login', (req, res) => {
           { expiresIn: 3600 },
           (err, token) => {
             if (err) throw err;
-
             res.json({
               success: true,
               token: 'Bearer ' + token
@@ -167,6 +166,19 @@ router.post('/login', (req, res) => {
       }
     });
   });
+
+  //here I want to track the number of times
+  //that the student logs in :)
+  //and this works. No results are
+  //given to the server. But there aren't any
+  //errors that I can see
+
+  User.findOne({ email })
+    .then(user => {
+      user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
+      user.save().catch(err => console.log(err)); //save the request
+    })
+    .catch(err => console.log(err));
 });
 
 /**

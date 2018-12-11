@@ -21,6 +21,10 @@ const UserSchema = new Schema({
     type: Number,
     default: 0
   },
+  timesLoggedIn: {
+    type: Number,
+    default: 0
+  },
   isAdmin: {
     type: Boolean,
     default: false
