@@ -8,13 +8,13 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post('/api/users/register', userData)
     .then(res => history.push('/login'))
-    .catch(err => {
+    .catch(err =>
       //dispatch must have a type
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      });
-    });
+      })
+    );
 };
 
 export const loginUser = userData => dispatch => {
