@@ -20,6 +20,7 @@ import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import MakeRequest from './components/requests/MakeRequest';
 import RequestList from './components/requests/RequestList';
+import StatsPage from './components/stats/StatsPage';
 
 if (localStorage.jwtToken) {
   //set the auth header token
@@ -67,6 +68,9 @@ class App extends Component {
                   path='/requestlist'
                   component={RequestList}
                 />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path='/stats' component={StatsPage} />
               </Switch>
             </div>
             <Footer />

@@ -5,3 +5,5 @@ export const GET_REQUESTS = 'GET_REQUESTS';
 export const MAKE_REQUEST = 'MAKE_A_REQUEST';
 export const REQUESTS_LOADING = 'REQUESTS_LOADING';
 export const DELETE_REQUEST = 'DELETE_REQUEST';
+
+export const GET_STATS = 'GET_STATS';

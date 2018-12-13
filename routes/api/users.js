@@ -149,6 +149,38 @@ router.get(
 );
 
 /**
+ * @route   GET api/users/stats
+ * @desc    get the the stats for everyone in the lab!
+ * @access  Private
+ */
+
+router.get(
+  '/stats',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    //get all of the users!
+
+    var totalRequests = 0;
+    var totalTimesLoggedIn = 0;
+
+    User.find({})
+      .then(users => {
+        for (var i = 0; i < users.length; i++) {
+          totalRequests += users[i].numberOfRequests;
+          totalTimesLoggedIn += users[i].timesLoggedIn;
+        }
+
+        const stats = {
+          requests: totalRequests,
+          logins: totalTimesLoggedIn
+        };
+        res.json(stats);
+      })
+      .catch();
+  }
+);
+
+/**
  * @route   POST api/users/login
  * @desc    login the user and return the jwt
  * @access  Public

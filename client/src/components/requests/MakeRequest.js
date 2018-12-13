@@ -96,7 +96,7 @@ class MakeRequest extends Component {
             <div className='col-md-8 m-auto'>
               <h1 className='display-4 text-center'>register</h1>
               <p className='lead text-center'>
-                Create your database help account
+                thanks for being here. how can we help you?
               </p>
               <form onSubmit={this.onSubmit}>
                 <SelectListGroup

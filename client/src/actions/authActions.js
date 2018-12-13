@@ -32,7 +32,7 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       //set current user
 
-      if (isAdmin) dispatch(setCurrentUser(decoded, isAdmin));
+      dispatch(setCurrentUser(decoded, isAdmin));
     })
     .catch(err =>
       dispatch({
