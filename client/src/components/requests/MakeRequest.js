@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { makeRequest } from '../../actions/requestActions';
+import { makeRequest, fetchRequests } from '../../actions/requestActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
@@ -65,6 +65,7 @@ class MakeRequest extends Component {
 
     //and use redux
     this.props.makeRequest(newRequest, this.props.history);
+    this.props.fetchRequests(this.props.history);
   };
 
   render() {
@@ -108,7 +109,7 @@ class MakeRequest extends Component {
                 />
 
                 <TextAreaFieldGroup
-                  placeholder='what do you need help with'
+                  placeholder='describe as best as you can what you need help with'
                   name='comment'
                   value={this.state.comment}
                   onChange={this.onChange}
@@ -128,6 +129,8 @@ class MakeRequest extends Component {
 }
 
 MakeRequest.propTypes = {
+  makeRequest: PropTypes.func.isRequired,
+  fetchRequests: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   requests: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -141,5 +144,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { makeRequest }
+  { makeRequest, fetchRequests }
 )(withRouter(MakeRequest));

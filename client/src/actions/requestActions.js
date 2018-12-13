@@ -10,16 +10,24 @@ import {
 } from './types';
 
 export const fetchRequests = history => dispatch => {
+  //dispatch requests loading
   axios
     .get('/api/requests')
-    .then(res => history.push('/login'))
-    .catch(err =>
-      //dispatch must have a type
+    .then(res => {
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        type: GET_REQUESTS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      //dispatch must have a type
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    });
 };
 
 export const makeRequest = (requestData, history) => dispatch => {
@@ -49,14 +57,26 @@ export const makeRequest = (requestData, history) => dispatch => {
   //make it go to the list of requests!
   axios
     .post('/api/requests', requestData)
-    .then(res => history.push('/dashboard'))
-    .catch(err =>
-      //dispatch must have a type
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .then(res => history.push('/requestlist'))
+    .catch(err => {
+      if (err.response) {
+        //dispatch must have a type
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    });
+};
+
+//we need the id to know which one to delete!
+export const deleteRequest = id => dispatch => {
+  axios.delete(`/api/requests/${id}`).then(res => {
+    dispatch({
+      type: DELETE_REQUEST,
+      payload: id
+    });
+  });
 };
 
 /**

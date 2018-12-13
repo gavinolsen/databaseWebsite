@@ -185,7 +185,8 @@ router.post('/login', (req, res) => {
             if (err) throw err;
             res.json({
               success: true,
-              token: 'Bearer ' + token
+              token: 'Bearer ' + token,
+              isAdmin: user.isAdmin
             });
           }
         );

@@ -23,15 +23,16 @@ export const loginUser = userData => dispatch => {
     .then(res => {
       //save to local storage
       //extract it from param
-      const { token } = res.data;
-      //set it
+      const { token, isAdmin } = res.data;
+
       localStorage.setItem('jwtToken', token);
       //call the function that we have set up
       setAuthToken(token);
       //decode token to get user data
       const decoded = jwt_decode(token);
       //set current user
-      dispatch(setCurrentUser(decoded));
+
+      if (isAdmin) dispatch(setCurrentUser(decoded, isAdmin));
     })
     .catch(err =>
       dispatch({
@@ -42,10 +43,11 @@ export const loginUser = userData => dispatch => {
 };
 
 //set logged in user
-export const setCurrentUser = decoded => {
+export const setCurrentUser = (decoded, isAdmin) => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: decoded,
+    isAdmin
   };
 };
 

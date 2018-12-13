@@ -25,18 +25,35 @@ class Navbar extends Component {
           style={{
             color: 'gray',
             fontSizeAdjust: '-moz-initial',
-            fontSize: '30px',
-            marginRight: '40px'
+            fontSize: '30px'
           }}
         >
           {userName}
         </li>
-        <li className='nav-item nav-link' style={{ color: 'gray' }}>
-          <Link to='/makerequest' style={{ color: 'gray' }}>
+        <li className='nav-item nav-link'>
+          <Link
+            to='/makerequest'
+            style={{
+              color: 'gray',
+              fontSizeAdjust: '-moz-initial',
+              fontSize: '30px'
+            }}
+          >
             help
           </Link>
         </li>
-
+        <li className='nav-item nav-link'>
+          <Link
+            to='/requestlist'
+            style={{
+              color: 'gray',
+              fontSizeAdjust: '-moz-initial',
+              fontSize: '30px'
+            }}
+          >
+            lists
+          </Link>
+        </li>
         <li className='nav-item'>
           <a
             href=''

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-//THIS COMPOENT SHOULD HAVE TWO LINKS TO THE TWO LISTS
+//THIS COMPOENT SHOULD HAVE TWO LINKS TO THE LISTS
 
 class Dashboard extends Component {
   render() {

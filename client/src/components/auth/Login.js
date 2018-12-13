@@ -13,21 +13,23 @@ class Login extends Component {
       password: '',
       errors: {}
     };
-  }
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
-
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
     }
   }
 

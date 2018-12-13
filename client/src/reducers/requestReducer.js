@@ -26,6 +26,13 @@ export default function(state = initalState, action) {
         isWaitingOnHelp: true,
         requests: [action.payload, ...state.requests]
       };
+    case DELETE_REQUEST:
+      return {
+        ...state,
+        requests: state.requests.filter(
+          request => request._id !== action.payload
+        )
+      };
     default:
       return state;
   }

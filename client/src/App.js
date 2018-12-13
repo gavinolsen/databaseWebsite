@@ -19,6 +19,7 @@ import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import MakeRequest from './components/requests/MakeRequest';
+import RequestList from './components/requests/RequestList';
 
 if (localStorage.jwtToken) {
   //set the auth header token
@@ -33,11 +34,9 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     //log the user out!
     store.dispatch(logoutUser);
-    store.dispatch(clearCurrentProfile());
-    //TODO: clear the current profile
 
     //redirect to login page
-    window.location.href = '/login';
+    //window.location.href = '/login';
   }
 }
 
@@ -60,6 +59,13 @@ class App extends Component {
                   exact
                   path='/makerequest'
                   component={MakeRequest}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/requestlist'
+                  component={RequestList}
                 />
               </Switch>
             </div>
