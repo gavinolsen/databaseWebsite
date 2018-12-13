@@ -15,8 +15,28 @@ class Navbar extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
+    const userName = user.name;
+
+    //add
     const authLinks = (
       <ul className='navbar-nav ml-auto'>
+        <li
+          className='nav-item nav-link'
+          style={{
+            color: 'gray',
+            fontSizeAdjust: '-moz-initial',
+            fontSize: '30px',
+            marginRight: '40px'
+          }}
+        >
+          {userName}
+        </li>
+        <li className='nav-item nav-link' style={{ color: 'gray' }}>
+          <Link to='/makerequest' style={{ color: 'gray' }}>
+            help
+          </Link>
+        </li>
+
         <li className='nav-item'>
           <a
             href=''
@@ -44,14 +64,6 @@ class Navbar extends Component {
       </ul>
     );
 
-    const userName = (
-      <ul className='navbar-nav ml-auto'>
-        <li className='nav-link' style={{ textEmphasisColor: 'white' }}>
-          {user.name}
-        </li>
-      </ul>
-    );
-
     return (
       <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-4'>
         <div className='container'>
@@ -69,14 +81,12 @@ class Navbar extends Component {
           <div className='collapse navbar-collapse' id='mobile-nav'>
             <ul className='navbar-nav mr-auto'>
               <li className='nav-item'>
-                <Link className='nav-link' to='/'>
+                <Link className='nav-link' to='/dashboard'>
                   {' '}
                   users
                 </Link>
               </li>
             </ul>
-
-            {isAuthenticated ? userName : ''}
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </div>

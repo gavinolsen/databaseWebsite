@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-
-import classnames from 'classnames';
+import SelectListGroup from '../common/SelectListGroup';
 
 import '../../App.css';
 
@@ -69,6 +68,13 @@ class Register extends Component {
   render() {
     const { errors } = this.state;
 
+    const classOptions = [
+      { label: '111', value: '111' },
+      { label: '225', value: '225' },
+      { label: '325', value: '325' },
+      { label: '425', value: '425' }
+    ];
+
     return (
       //<!-- Register -->
       <div className='register'>
@@ -97,22 +103,14 @@ class Register extends Component {
                 />
                 <div className='lead text-center'>Class</div>
 
-                <div className='form-group'>
-                  <select
-                    className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.className
-                    })}
-                    value={this.state.className}
-                    onChange={this.onChange}
-                    name='className'
-                  >
-                    <option value='225'>225</option>
-                    <option value='325'>325</option>
-                  </select>
-                  {errors.className && (
-                    <div className='invalid-feedback'>{errors.className} </div>
-                  )}
-                </div>
+                <SelectListGroup
+                  name='className'
+                  value={this.state.className}
+                  error={errors.className}
+                  onChange={this.onChange}
+                  options={classOptions}
+                  info='what class are you taking'
+                />
                 <TextFieldGroup
                   placeholder='password'
                   name='password'

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 
-import classnames from 'classnames';
-
 class Login extends Component {
   //set the state
   constructor() {

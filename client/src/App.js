@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
@@ -9,6 +9,7 @@ import store from './store';
 
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import PrivateRoute from './components/common/PrivateRoute';
 
 //https://reactjs.org/docs/conditional-rendering.html
 
@@ -16,6 +17,8 @@ import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
+import Dashboard from './components/dashboard/Dashboard';
+import MakeRequest from './components/requests/MakeRequest';
 
 if (localStorage.jwtToken) {
   //set the auth header token
@@ -30,7 +33,7 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     //log the user out!
     store.dispatch(logoutUser);
-
+    store.dispatch(clearCurrentProfile());
     //TODO: clear the current profile
 
     //redirect to login page
@@ -49,6 +52,16 @@ class App extends Component {
             <div className='container'>
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
+              <Switch>
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/makerequest'
+                  component={MakeRequest}
+                />
+              </Switch>
             </div>
             <Footer />
           </div>

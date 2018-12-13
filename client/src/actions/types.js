@@ -1,4 +1,7 @@
 export const GET_ERRORS = 'GET_ERRORS';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+
 export const GET_REQUESTS = 'GET_REQUESTS';
-export const MAKE_A_REQUEST = 'MAKE_A_REQUEST';
+export const MAKE_REQUEST = 'MAKE_A_REQUEST';
+export const REQUESTS_LOADING = 'REQUESTS_LOADING';
+export const DELETE_REQUEST = 'DELETE_REQUEST';
