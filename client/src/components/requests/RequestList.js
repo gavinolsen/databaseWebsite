@@ -33,6 +33,11 @@ class RequestList extends Component {
             color='danger'
             size='sm'
             onClick={this.onDeleteClick.bind(this, request_id)}
+            style={{
+              float: 'right',
+              marginTop: '0px',
+              verticalAlign: 'middle'
+            }}
           >
             &times;
           </Button>
@@ -58,12 +63,13 @@ class RequestList extends Component {
                     <CSSTransition key={_id} timeout={500} classNames='fade'>
                       <ListGroupItem className='request-box'>
                         {userInfo.name}{' '}
-                        <small style={{ float: 'right' }}> {className} </small>
-                        <div>
-                          {determineButton(userInfo._id, _id)
-                            ? buttonContent
-                            : ''}
-                        </div>
+                        <small style={{ float: '', marginBottom: '5px' }}>
+                          {' '}
+                          {className}{' '}
+                        </small>
+                        {determineButton(userInfo._id, _id)
+                          ? buttonContent
+                          : ''}
                       </ListGroupItem>
                     </CSSTransition>
                   ))}
