@@ -32,6 +32,18 @@ class Navbar extends Component {
         </li>
         <li className='nav-item nav-link'>
           <Link
+            to='/stats'
+            style={{
+              color: 'gray',
+              fontSizeAdjust: '-moz-initial',
+              fontSize: '30px'
+            }}
+          >
+            stats
+          </Link>
+        </li>
+        <li className='nav-item nav-link'>
+          <Link
             to='/makerequest'
             style={{
               color: 'gray',
@@ -56,7 +68,7 @@ class Navbar extends Component {
         </li>
         <li className='nav-item'>
           <a
-            href=''
+            href='/'
             onClick={this.onLogoutClick.bind(this)}
             className='nav-link'
           >

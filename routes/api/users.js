@@ -13,6 +13,7 @@ const validateLoginInput = require('../../validation/login');
 
 //get the keys
 const keys = require('../../config/keys');
+const adminUsers = require('../../config/keys').adminUsers;
 
 /**
  * @route   GET api/users/test
@@ -181,6 +182,13 @@ router.get(
 );
 
 /**
+ *
+ * I wanna make a logout route that gets called
+ * when the user logs out! then I'll be able to
+ * toggle the isLoggedIn property
+ */
+
+/**
  * @route   POST api/users/login
  * @desc    login the user and return the jwt
  * @access  Public
@@ -273,6 +281,10 @@ router.post('/register', (req, res) => {
     if (req.body.email.toString() === 'mclaughlinm@byui.edu') {
       newUser.isAdmin = true;
     }
+
+    // if (adminUsers.includes(req.body.email.toString())) {
+    // i want this to work! I'll test it later
+    // }
 
     //generate the users salt
     bcrypt.genSalt(10, (err, salt) => {

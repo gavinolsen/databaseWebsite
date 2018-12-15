@@ -7,6 +7,7 @@ const passport = require('passport');
 //models
 const User = require('../../models/User');
 const Request = require('../../models/Request');
+const StatsRequest = require('../../models/StatsRequest');
 
 //validation
 const validateRequestInput = require('../../validation/request');
@@ -113,9 +114,20 @@ router.post(
       comment: req.body.comment
     });
 
+    //make a stats request
+    const newStatsRequest = new StatsRequest({
+      userInfo: {
+        _id: req.user.id,
+        name: req.user.name
+      },
+      className: req.user.className,
+      labNumber: req.body.labNumber
+    });
+
     //now increment the users numberOfReqests.
     //modify it
     newRequest.save().catch(err => res.status(404).json(err));
+    newStatsRequest.save().catch(err => res.status(404).json(err));
 
     User.findById(req.user.id)
       .then(user => {

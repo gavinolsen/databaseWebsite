@@ -1,13 +1,7 @@
 import axios from 'axios';
 
 //get types
-import {
-  GET_REQUESTS,
-  MAKE_A_REQUEST,
-  DELETE_REQUEST,
-  REQUESTS_LOADING,
-  GET_ERRORS
-} from './types';
+import { GET_REQUESTS, DELETE_REQUEST, GET_ERRORS } from './types';
 
 export const fetchRequests = history => dispatch => {
   //dispatch requests loading

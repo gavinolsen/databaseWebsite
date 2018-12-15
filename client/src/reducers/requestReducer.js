@@ -1,10 +1,5 @@
 //sets up the state of our app!
-import {
-  GET_REQUESTS,
-  MAKE_REQUEST,
-  REQUESTS_LOADING,
-  DELETE_REQUEST
-} from '../actions/types';
+import { GET_REQUESTS, MAKE_REQUEST, DELETE_REQUEST } from '../actions/types';
 
 //I want to know if the user
 //

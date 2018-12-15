@@ -8,7 +8,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_STATS:
-      console.log(action);
       return {
         ...state,
         requests: action.payload.requests,

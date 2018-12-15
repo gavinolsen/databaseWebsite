@@ -85,7 +85,7 @@ class Register extends Component {
               <p className='lead text-center'>
                 Create your database help account
               </p>
-              <form onSubmit={this.onSubmit}>
+              <form onSubmit={this.onSubmit} style={{ top: '-20' }}>
                 <TextFieldGroup
                   placeholder='name'
                   name='name'

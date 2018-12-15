@@ -6,7 +6,6 @@ export const fetchStats = history => dispatch => {
   axios
     .get('/api/users/stats')
     .then(res => {
-      console.log(res);
       dispatch({
         type: GET_STATS,
         payload: res.data
@@ -14,7 +13,6 @@ export const fetchStats = history => dispatch => {
     })
     .catch(err => {
       //dispatch must have a type
-      console.log(err);
       if (err.response) {
         dispatch({
           type: GET_ERRORS,

@@ -8,6 +8,9 @@ const Schema = mongoose.Schema;
 //in the request schema, i'll want to have an
 //object that I use to identify the student who
 //gave the request
+//
+//make a property here that tracks whether or not the user is logged in
+//just toggle it in the place where
 const UserSchema = new Schema({
   name: {
     type: String,

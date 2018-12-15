@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Spinner from '../common/Spinner';
+import Requests from './Requests';
 
 //I'll have to connect this to the request reducer!!!
 //hook it up
@@ -24,6 +25,13 @@ class RequestList extends Component {
     const { requests } = this.props.requests;
 
     let buttonContent;
+
+    //here I can check for the loading property!
+    //check if requests are equal to null, and
+    //if they are just
+
+    //moment().format('MMMM Do YYYY, h:mm:ss a');
+    //the last part will give us the part we want!!!
 
     const determineButton = (request_user_id, request_id) => {
       if (user.id === request_user_id || isAdmin) {
@@ -63,7 +71,13 @@ class RequestList extends Component {
                     <CSSTransition key={_id} timeout={500} classNames='fade'>
                       <ListGroupItem className='request-box'>
                         {userInfo.name}{' '}
-                        <small style={{ float: '', marginBottom: '5px' }}>
+                        <small
+                          style={{
+                            float: '',
+                            marginBottom: '5px',
+                            right: '20'
+                          }}
+                        >
                           {' '}
                           {className}{' '}
                         </small>
@@ -79,6 +93,8 @@ class RequestList extends Component {
           </div>
         );
       } else {
+        //htere aren't any requests,
+        //prompt the user to make one
       }
     }
 
@@ -117,43 +133,3 @@ export default connect(
   mapStateToProps,
   { fetchRequests, deleteRequest }
 )(RequestList);
-
-/**
- * 
- * 
- * <Button
-                    className="remove-btn"
-                    color="danger"
-                    size="sm"
-                    onClick={this.onDeleteClick.bind(this, _id)}
-                  >&times;</Button>
- * 
- * 
- * 
- * return(
-      <Provider store={ school }>
-      <Container>
-        <ListGroup>
-          <TransitionGroup className="shopping-list">
-            {school.map(({ _id, name, className, date }) => (
-              <CSSTransition key={ _id } timeout={500} classNames="fade">
-                <ListGroupItem>
-                <Button
-                    className="remove-btn"
-                    color="danger"
-                    size="sm"
-                    onClick={this.onDeleteClick.bind(this, _id)}
-                  >&times;</Button>
-
-                  { name } 
-                  <h2 style={{marginLeft: 44}}> { className }</h2>
-                </ListGroupItem>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ListGroup>
-      </Container>
-      </Provider>
-    );
- * 
- */

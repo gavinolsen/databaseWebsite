@@ -41,3 +41,19 @@ app.use('/api/requests', requests);
 //and listen
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
+/**
+ *
+ * make a way to track current logged in users
+ * TODO --> make variable in /models/User.js, then use it in the routes
+ * group lists by class
+ * TODO --> all you need to do for this is implement serverside rendering.
+ *          create properties in the request reducer for 225 + 325 classes
+ * make a way to sort logins + requests by lab / date
+ * TODO --> learn about dates in javascript. implement the new class, StatsRequest
+ *
+ * limit size of comment to < 100 words and make sure you have step# + substep letter
+ * restrict stats to admin users
+ * add spinner to anything that loads!!
+ *
+ */
