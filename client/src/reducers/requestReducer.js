@@ -4,7 +4,6 @@ import { GET_REQUESTS, MAKE_REQUEST, DELETE_REQUEST } from '../actions/types';
 //I want to know if the user
 //
 const initalState = {
-  isWaitingOnHelp: false,
   requests: []
 };
 
@@ -19,7 +18,6 @@ export default function(state = initalState, action) {
     case MAKE_REQUEST:
       return {
         ...state,
-        isWaitingOnHelp: true,
         requests: [action.payload, ...state.requests]
       };
     case DELETE_REQUEST:

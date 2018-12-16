@@ -87,7 +87,7 @@ class Register extends Component {
               </p>
               <form onSubmit={this.onSubmit} style={{ top: '-20' }}>
                 <TextFieldGroup
-                  placeholder='name'
+                  placeholder='first and last name'
                   name='name'
                   value={this.state.name}
                   onChange={this.onChange}

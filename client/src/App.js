@@ -25,6 +25,8 @@ import RequestList from './components/requests/RequestList';
 import RequestList225 from './components/requests/RequestList225';
 import RequestList325 from './components/requests/RequestList325';
 import StatsPage from './components/stats/StatsPage';
+import Stats225 from './components/stats/Stats225';
+import Stats325 from './components/stats/Stats325';
 
 if (localStorage.jwtToken) {
   //set the auth header token
@@ -93,6 +95,12 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path='/stats' component={StatsPage} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path='/stats225' component={Stats225} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path='/stats325' component={Stats325} />
               </Switch>
               <Route exact path='/not-found' component={NotFound} />
             </div>

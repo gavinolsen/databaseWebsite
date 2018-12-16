@@ -50,7 +50,7 @@ class RequestList325 extends Component {
       <div className='request-list' style={{ marginBottom: '100px' }}>
         <div className='container'>
           <div className='row'>
-            <h1 className='display-4 col-md-4'>
+            <h1 className='display-4 col-md-6'>
               <Link to='/requestlist' className='rounded btn-dark'>
                 Requests
               </Link>

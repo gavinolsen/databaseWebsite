@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchStats } from '../../actions/statsActions';
-import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
-class StatsPage extends Component {
+class Stats325 extends Component {
   componentDidMount() {
     if (!this.props.auth.isAdmin) {
       this.props.history.push('/dashboard');
@@ -26,7 +26,14 @@ class StatsPage extends Component {
     return (
       <div>
         <div className='jumbotron'>
-          <h1 className='display-4'>Stats page</h1>
+          <Link
+            to='/stats'
+            className='btn btn-success'
+            style={{ marginTop: '-70px' }}
+          >
+            Main Stats
+          </Link>
+          <h1 className='display-4'>325 Stats</h1>
 
           <div
             className='row'
@@ -51,7 +58,7 @@ class StatsPage extends Component {
             </Link>
           </div>
 
-          <p className='lead'>so far, here's the stats for the lab</p>
+          <p className='lead'>so far, here's the stats for the 225 class</p>
           <Button onClick={this.onClick}>refresh</Button>
           <h2 style={{ marginTop: '50px' }}>logins</h2>
           <h3 style={{ marginLeft: '30px' }}>{logins}</h3>
@@ -66,7 +73,7 @@ class StatsPage extends Component {
   }
 }
 
-StatsPage.propTypes = {
+Stats325.propTypes = {
   fetchStats: PropTypes.func.isRequired,
   stats: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
@@ -80,4 +87,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { fetchStats }
-)(StatsPage);
+)(Stats325);
