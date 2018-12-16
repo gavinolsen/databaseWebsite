@@ -11,6 +11,7 @@ const initalState = {
 export default function(state = initalState, action) {
   switch (action.type) {
     case GET_REQUESTS:
+      console.log(action);
       return {
         ...state,
         requests: action.payload

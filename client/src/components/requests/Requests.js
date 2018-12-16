@@ -1,9 +1,34 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteRequest } from '../../actions/requestActions';
 
 class Requests extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentTime: new Date().now
+    };
+  }
+
+  //make sure you take that interval out!
+  //it causes a memory leak
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
+
+  tick() {
+    this.setState(prevState => ({
+      currentTime: new Date().now
+    }));
+  }
+
   onDeleteClick = id => {
     console.log(id);
     this.props.deleteRequest(id);
@@ -37,19 +62,32 @@ class Requests extends Component {
       }
     };
 
+    //moment().format('MMMM Do YYYY, h:mm:ss a');
+    //the last part will give us the part we want!!!
+
     const requests = this.props.requests.map(request => (
       <tr key={request._id}>
         <td>{request.userInfo.name}</td>
         <td>{request.className}</td>
         <td>
-          {determineButton(request.userInfo._id, _id) ? buttonContent : ''}
+          <Moment format='h:mm:ss a'>{request.date}</Moment>
+        </td>
+        <td>
+          {determineButton(request.userInfo._id, request._id)
+            ? buttonContent
+            : null}
         </td>
       </tr>
     ));
 
     return (
       <div>
-        <h4 className='mb-4'>Education Credentials</h4>
+        <h4 className='mb-4'>
+          <Moment format='MMM DD -- h:mm:ss a'>{this.state.currentTime}</Moment>
+        </h4>
+        <h4 className='mb-4'>
+          Currently waiting: {this.props.requests.length}{' '}
+        </h4>
         <table className='table'>
           <thead>
             <tr>

@@ -11,6 +11,8 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import PrivateRoute from './components/common/PrivateRoute';
 
+import NotFound from './components/not-found/NotFound';
+
 //https://reactjs.org/docs/conditional-rendering.html
 
 import './App.css';
@@ -20,6 +22,8 @@ import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import MakeRequest from './components/requests/MakeRequest';
 import RequestList from './components/requests/RequestList';
+import RequestList225 from './components/requests/RequestList225';
+import RequestList325 from './components/requests/RequestList325';
 import StatsPage from './components/stats/StatsPage';
 
 if (localStorage.jwtToken) {
@@ -42,6 +46,10 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -70,8 +78,23 @@ class App extends Component {
                 />
               </Switch>
               <Switch>
+                <PrivateRoute
+                  exact
+                  path='/requestlist225'
+                  component={RequestList225}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/requestlist325'
+                  component={RequestList325}
+                />
+              </Switch>
+              <Switch>
                 <PrivateRoute exact path='/stats' component={StatsPage} />
               </Switch>
+              <Route exact path='/not-found' component={NotFound} />
             </div>
             <Footer />
           </div>

@@ -5,6 +5,12 @@ import { fetchStats } from '../../actions/statsActions';
 import { Button } from 'reactstrap';
 
 class StatsPage extends Component {
+  componentDidMount() {
+    if (!this.props.auth.isAdmin) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   componentWillMount() {
     this.props.fetchStats();
   }

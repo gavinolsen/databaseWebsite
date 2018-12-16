@@ -10,7 +10,8 @@ const Schema = mongoose.Schema;
 //gave the request
 //
 //make a property here that tracks whether or not the user is logged in
-//just toggle it in the place where
+//just toggle it in the users.js route file in the method where they log in.
+//there will also  have to be a method
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -28,6 +29,18 @@ const UserSchema = new Schema({
     type: Number,
     default: 0
   },
+  isLoggedIn: {
+    type: Boolean,
+    default: false
+  },
+  loginDates: [
+    {
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   isAdmin: {
     type: Boolean,
     default: false

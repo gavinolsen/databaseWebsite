@@ -2,6 +2,9 @@
 import { SET_CURRENT_USER } from '../actions/types';
 import isEmpty from '../validation/is-empty';
 
+//I could actually just manually check in here for the auth state too!
+//that would work if I just get the id's from mongodb
+
 const initalState = {
   isAuthenticated: false,
   isAdmin: false,

@@ -41,6 +41,10 @@ router.get('/', (req, res) => {
     });
 });
 
+//these next two are really for statistics,
+//but i've basically replicated it
+//in the stats.js router file
+
 /**
  * @route   GET api/requests/225
  * @desc    get the requests for the 225 class
@@ -100,8 +104,17 @@ router.post(
       return res.status(404).json(errors);
     }
 
+    //check if the user is already there!!
+    //start by getting them all
+    // console.log(req);
+    // Request.find({ 'userInfo._id': req.user.id.toString() })
+    //   .then(requests => {
+    //     console.log(requests);
+    //   })
+    //   .catch(err => console.log(err));
+
     //
-    console.log(req.user);
+    //console.log(req.user);
 
     //make a new request
     const newRequest = new Request({
@@ -124,14 +137,16 @@ router.post(
       labNumber: req.body.labNumber
     });
 
-    //now increment the users numberOfReqests.
-    //modify it
+    //save the request for viewing purposes as well as
+    //statistics
     newRequest.save().catch(err => res.status(404).json(err));
     newStatsRequest.save().catch(err => res.status(404).json(err));
 
+    //now increment the users numberOfReqests.
     User.findById(req.user.id)
       .then(user => {
         user.numberOfRequests = user.numberOfRequests + 1; //increment the number of requests
+        user.isWaitingOnHelp = true;
         user
           .save()
           .then()
@@ -161,7 +176,7 @@ router.delete(
           return res.status(404).json(errors);
         }
 
-        console.log(req.user);
+        //console.log(req.user);
 
         //this will work for now
         if (
@@ -177,6 +192,17 @@ router.delete(
           .remove()
           .then(res.json({ success: true }))
           .catch(err => res.json(err));
+
+        //request has been removed. now change the user's
+        //isWaitingOnHelp property to false
+
+        User.findById(request.userInfo._id).then(user => {
+          user.isWaitingOnHelp = false;
+          user
+            .save()
+            .then()
+            .catch(err => res.json(err));
+        });
       })
       .catch(err => {
         errors.norequest = "there's no request by that id";

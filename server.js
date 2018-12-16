@@ -12,6 +12,7 @@ app.use(body_parser.json());
 //and make sure you put the models here
 const users = require('./routes/api/users');
 const requests = require('./routes/api/requests');
+const stats = require('./routes/api/stats');
 
 const mongoURI = require('./config/keys').mongoURI;
 
@@ -37,6 +38,7 @@ require('./config/passport')(passport);
 //with the models we brought in
 app.use('/api/users', users);
 app.use('/api/requests', requests);
+app.use('/api/stats', stats);
 
 //and listen
 const port = process.env.PORT || 4000;

@@ -9,13 +9,30 @@ import { logoutUser } from '../../actions/authActions';
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
-    this.props.logoutUser();
+    this.props.logoutUser(this.props.auth.user);
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    //if they are admin, we should render the stats page.
+    //otherwise, don't.
+    const { isAuthenticated, user, isAdmin } = this.props.auth;
 
     const userName = user.name;
+
+    const adminLinks = (
+      <li className='nav-item nav-link'>
+        <Link
+          to='/stats'
+          style={{
+            color: 'gray',
+            fontSizeAdjust: '-moz-initial',
+            fontSize: '30px'
+          }}
+        >
+          stats
+        </Link>
+      </li>
+    );
 
     //add
     const authLinks = (
@@ -30,18 +47,7 @@ class Navbar extends Component {
         >
           {userName}
         </li>
-        <li className='nav-item nav-link'>
-          <Link
-            to='/stats'
-            style={{
-              color: 'gray',
-              fontSizeAdjust: '-moz-initial',
-              fontSize: '30px'
-            }}
-          >
-            stats
-          </Link>
-        </li>
+        {isAdmin ? adminLinks : null}
         <li className='nav-item nav-link'>
           <Link
             to='/makerequest'

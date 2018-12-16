@@ -3,7 +3,7 @@ import { GET_ERRORS } from '../actions/types';
 //sets up the state of our app!
 
 const initalState = {
-  user: {}
+  errors: {}
 };
 
 export default function(state = initalState, action) {

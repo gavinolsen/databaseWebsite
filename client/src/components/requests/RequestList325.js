@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchRequests } from '../../actions/requestActions';
 
-class RequestList extends Component {
+class RequestList325 extends Component {
   componentDidMount() {
     this.props.fetchRequests();
   }
@@ -26,17 +26,19 @@ class RequestList extends Component {
   render() {
     const { requests } = this.props.requests;
 
+    const requests325 = requests.filter(request => request.className === '325');
+
     //here I can check for the loading property!
     //check if requests are equal to null, and
     //if they are just
 
     let requestListContent;
 
-    if (requests === null) {
+    if (requests325 === null) {
       requestListContent = <Spinner />;
-    } else if (requests) {
-      if (Object.keys(requests).length > 0) {
-        requestListContent = <Requests requests={requests} />;
+    } else if (requests325) {
+      if (Object.keys(requests325).length > 0) {
+        requestListContent = <Requests requests={requests325} />;
       } else {
         //htere aren't any requests,
         //prompt the user to make one
@@ -57,7 +59,7 @@ class RequestList extends Component {
               className='col-md-4'
               style={{ marginTop: '10px', marginLeft: '40px' }}
             >
-              main list
+              325 list
             </h1>
           </div>
           <div
@@ -95,7 +97,7 @@ class RequestList extends Component {
 //that gets the requests,
 //but the function to make a request
 //will come from the modal I'll make
-RequestList.propTypes = {
+RequestList325.propTypes = {
   fetchRequests: PropTypes.func.isRequired,
   requests: PropTypes.object.isRequired
 };
@@ -107,4 +109,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { fetchRequests }
-)(RequestList);
+)(RequestList325);

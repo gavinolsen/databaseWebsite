@@ -51,7 +51,7 @@ export const setCurrentUser = (decoded, isAdmin) => {
   };
 };
 
-export const logoutUser = () => dispatch => {
+export const logoutUser = userData => dispatch => {
   //remove the token from local storate
   localStorage.removeItem('jwtToken');
   //remove the auth header for future requests
@@ -60,5 +60,13 @@ export const logoutUser = () => dispatch => {
   //set current user to {}, which sets isAuthenticated to false
   //function made in this file, but calls the reducer
   //../reducers/authReducer.js
+
   dispatch(setCurrentUser({}));
+
+  axios
+    .post('/api/users/logout', userData)
+    .then(res => {
+      res.json(res);
+    })
+    .catch();
 };

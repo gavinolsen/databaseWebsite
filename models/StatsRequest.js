@@ -18,6 +18,7 @@ const StatsRequestSchema = new Schema({
     type: String,
     required: true
   },
+  //this is a string, don't forget that
   labNumber: {
     type: String,
     default: '1'

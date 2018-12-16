@@ -150,38 +150,6 @@ router.get(
 );
 
 /**
- * @route   GET api/users/stats
- * @desc    get the the stats for everyone in the lab!
- * @access  Private
- */
-
-router.get(
-  '/stats',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    //get all of the users!
-
-    var totalRequests = 0;
-    var totalTimesLoggedIn = 0;
-
-    User.find({})
-      .then(users => {
-        for (var i = 0; i < users.length; i++) {
-          totalRequests += users[i].numberOfRequests;
-          totalTimesLoggedIn += users[i].timesLoggedIn;
-        }
-
-        const stats = {
-          requests: totalRequests,
-          logins: totalTimesLoggedIn
-        };
-        res.json(stats);
-      })
-      .catch();
-  }
-);
-
-/**
  *
  * I wanna make a logout route that gets called
  * when the user logs out! then I'll be able to
@@ -217,10 +185,12 @@ router.post('/login', (req, res) => {
           name: user.name
         };
         //sign the token
+        //3600 * 24 = 86400
+        //the token expires in one day
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 3600 },
+          { expiresIn: 86400 },
           (err, token) => {
             if (err) throw err;
             res.json({
@@ -230,25 +200,50 @@ router.post('/login', (req, res) => {
             });
           }
         );
+
+        //the user is logged in, you can track the stats here!!!
+
+        //here I want to track the number of times
+        //that the student logs in :)
+        //and this works. No results are
+        //given to the server. But there aren't any
+        //errors that I can see
+
+        User.findOne({ email })
+          .then(user => {
+            user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
+            user.isLoggedIn = true;
+            const today = {
+              date: new Date().now
+            };
+
+            user.loginDates.push(today); //add the current date to the logins!!!
+            user.save().catch(err => console.log(err)); //save the user
+          })
+          .catch(err => console.log(err));
       } else {
         errors.password = 'incorrect password';
         return res.status(400).json(errors);
       }
     });
   });
+});
 
-  //here I want to track the number of times
-  //that the student logs in :)
-  //and this works. No results are
-  //given to the server. But there aren't any
-  //errors that I can see
+/**
+ * @route   POST api/users/logout/
+ * @desc    logout the user. this function is mainly for stats
+ *          and current info
+ * @access  Public
+ */
+router.post('/logout', (req, res) => {
+  //console.log(req.body);
 
-  User.findOne({ email })
+  User.findById({ _id: req.body.id })
     .then(user => {
-      user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
-      user.save().catch(err => console.log(err)); //save the request
+      user.isLoggedIn = false;
+      user.save().catch(err => res.json(err)); //save the user
     })
-    .catch(err => console.log(err));
+    .catch(err => res.json(err));
 });
 
 /**
@@ -278,13 +273,10 @@ router.post('/register', (req, res) => {
     });
 
     //this works
-    if (req.body.email.toString() === 'mclaughlinm@byui.edu') {
+    if (adminUsers.users.includes(req.body.email.toString())) {
+      // i want this to work! I'll test it later
       newUser.isAdmin = true;
     }
-
-    // if (adminUsers.includes(req.body.email.toString())) {
-    // i want this to work! I'll test it later
-    // }
 
     //generate the users salt
     bcrypt.genSalt(10, (err, salt) => {

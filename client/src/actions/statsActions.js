@@ -4,7 +4,7 @@ import { GET_STATS, GET_ERRORS } from './types';
 export const fetchStats = history => dispatch => {
   //dispatch requests loading
   axios
-    .get('/api/users/stats')
+    .get('/api/stats/totals')
     .then(res => {
       dispatch({
         type: GET_STATS,

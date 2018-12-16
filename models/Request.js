@@ -5,6 +5,13 @@ const Schema = mongoose.Schema;
 //i'll just associate the user with the
 //user's id. I"ll add the classname in ther
 //too, as well as the lab
+
+//this object is only stored temporarily. As soon as
+//the object is deleted from the list, it's gone from
+//the database.
+
+//permanent storage of each request is done by the
+//StatsRequest object
 const RequestSchema = new Schema({
   userInfo: {
     _id: {
@@ -27,6 +34,10 @@ const RequestSchema = new Schema({
   comment: {
     type: String,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

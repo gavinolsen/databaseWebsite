@@ -23,7 +23,9 @@ class MakeRequest extends Component {
     //this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.fetchRequests(this.props.history);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -43,8 +45,24 @@ class MakeRequest extends Component {
     //check the requirements
 
     //it would be pretty cool to change
-
     const { user } = this.props.auth;
+    const { requests } = this.props.requests;
+
+    //this doesn't work, so i'll make my
+    //I can't get my state to permanently appear!
+    //error checking only on server side
+    var i;
+    for (i = 0; i < requests.length; i++) {
+      if (user.id === requests[i].userInfo._id) {
+        this.setState({
+          errors: {
+            comment: 'you have already asked for help. wait your turn',
+            labNumber: 'you have already asked for help. wait your turn'
+          }
+        });
+        return;
+      }
+    }
 
     const newUserInfo = {
       name: user.name,
@@ -65,7 +83,6 @@ class MakeRequest extends Component {
 
     //and use redux
     this.props.makeRequest(newRequest, this.props.history);
-    this.props.fetchRequests(this.props.history);
   };
 
   render() {

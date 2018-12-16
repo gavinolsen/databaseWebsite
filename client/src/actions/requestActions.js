@@ -28,30 +28,15 @@ export const makeRequest = (requestData, history) => dispatch => {
   //I'll change this to go to the
   //request List. In the future, I'll just
   //have a modal button on the top of each list
-  //I'd like to push
-
-  /**
-   * switch (requestData.className) {
-    case '111':
-     history.push('/helplist111');
-    case '225':
-     history.push('/helplist225');
-    case '325':
-     history.push('/helplist325');
-    case '425':
-     history.push('/helplist425'); 
-    default:
-      history.push('/dashboard');
-   * 
-   */
-
-  //lets take a look at the data here
-  console.log(requestData);
+  //I'd like to push  //lets take a look at the data here
+  //console.log(requestData);
 
   //make it go to the list of requests!
   axios
     .post('/api/requests', requestData)
-    .then(res => history.push('/requestlist'))
+    .then(res => {
+      history.push('/requestlist');
+    })
     .catch(err => {
       if (err.response) {
         //dispatch must have a type
