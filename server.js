@@ -58,4 +58,7 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
  * restrict stats to admin users
  * add spinner to anything that loads!!
  *
+ * another cool idea would be to list the users by descending number of requests
+ * that would be in the stats
+ *
  */

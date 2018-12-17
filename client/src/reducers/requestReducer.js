@@ -1,8 +1,8 @@
 //sets up the state of our app!
 import { GET_REQUESTS, MAKE_REQUEST, DELETE_REQUEST } from '../actions/types';
 
-//I want to know if the user
-//
+//I want to know if the user has already made a request
+//so we can just check these requests!
 const initalState = {
   requests: []
 };
@@ -10,7 +10,7 @@ const initalState = {
 export default function(state = initalState, action) {
   switch (action.type) {
     case GET_REQUESTS:
-      console.log(action);
+      //console.log(action);
       return {
         ...state,
         requests: action.payload
@@ -31,35 +31,3 @@ export default function(state = initalState, action) {
       return state;
   }
 }
-
-/**
- * 
- * export default function(state = initialState, action) {
-  switch(action.type){
-    case GET_ITEMS:
-      return {
-        ...state,
-        items: action.payload,
-        loading: false
-      }
-    case DELETE_ITEM:
-      return {
-        ...state,
-        items: state.items.filter(item => item._id !== action.payload)
-      }
-      case ADD_ITEM:
-      return {
-        ...state,
-        items:[action.payload, ...state.items]
-      }
-      case ITEMS_LOADING:
-      return {
-        ...state,
-        loading: true
-      }
-    default:
-      return state;
-  }
-}
- * 
- */

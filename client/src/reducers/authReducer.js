@@ -17,7 +17,7 @@ export default function(state = initalState, action) {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        isAdmin: action.isAdmin,
+        isAdmin: action.isAdmin ? action.isAdmin : state.isAdmin,
         user: action.payload
       };
     default:

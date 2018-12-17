@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchStats } from '../../actions/statsActions';
+import { fetchStats, getStats325 } from '../../actions/statsActions';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 
 class Stats325 extends Component {
   componentDidMount() {
-    if (!this.props.auth.isAdmin) {
-      this.props.history.push('/dashboard');
-    }
+    //if (!this.props.auth.isAdmin) {
+    //  this.props.history.push('/dashboard');
+    // }
   }
 
   componentWillMount() {
     this.props.fetchStats();
+    this.props.getStats325();
   }
 
   onClick = () => {
@@ -21,7 +22,20 @@ class Stats325 extends Component {
   };
 
   render() {
-    const { logins, requests } = this.props.stats;
+    //const { logins, requests } = this.props.stats;
+
+    const { stats325 } = this.props.stats;
+    //I now have an array of labs in stats325
+
+    const stats = stats325.map((lab, index) => (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{lab.tue}</td>
+        <td>{lab.thu}</td>
+        <td>{lab.sat}</td>
+        <td>{lab.tue + lab.thu + lab.sat}</td>
+      </tr>
+    ));
 
     return (
       <div>
@@ -60,14 +74,39 @@ class Stats325 extends Component {
 
           <p className='lead'>so far, here's the stats for the 225 class</p>
           <Button onClick={this.onClick}>refresh</Button>
-          <h2 style={{ marginTop: '50px' }}>logins</h2>
-          <h3 style={{ marginLeft: '30px' }}>{logins}</h3>
-          <h2>requests</h2>
-          <h3 style={{ marginLeft: '30px' }}>{requests}</h3>
-          <hr className='my-4' />
-          <p>thanks</p>
-          <p className='lead' />
         </div>
+
+        {/* I want to make a table, that is color coordinated based on the
+            colors from true and disabled
+            https://react-bootstrap.github.io/components/list-group/#listgroup-styling-state
+            or colors, just below that ref.
+
+            and I wanna wrap that in a table, so that it's easy to read
+            https://react-bootstrap.github.io/components/table/
+        */}
+
+        <h2 className='info' style={{ marginLeft: '300px' }}>
+          # of requests
+        </h2>
+
+        <Table
+          striped
+          bordered
+          condensed='true'
+          hover
+          style={{ marginBottom: '150px' }}
+        >
+          <thead>
+            <tr>
+              <th>Lab #</th>
+              <th>Tuesday</th>
+              <th>Thursday</th>
+              <th>Saturday</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>{stats}</tbody>
+        </Table>
       </div>
     );
   }
@@ -75,6 +114,7 @@ class Stats325 extends Component {
 
 Stats325.propTypes = {
   fetchStats: PropTypes.func.isRequired,
+  getStats325: PropTypes.func.isRequired,
   stats: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -86,5 +126,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchStats }
+  { fetchStats, getStats325 }
 )(Stats325);

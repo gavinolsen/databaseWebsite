@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 
 class StatsPage extends Component {
   componentDidMount() {
-    if (!this.props.auth.isAdmin) {
-      this.props.history.push('/dashboard');
-    }
+    //if (!this.props.auth.isAdmin) {
+    //  this.props.history.push('/dashboard');
+    // }
   }
 
   componentWillMount() {

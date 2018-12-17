@@ -392,7 +392,27 @@ router.get('/225', (req, res) => {
       }
     });
 
-    res.json(stats);
+    //now I have it all like stats: {lab: { info }}
+    //so lets just push it into an array!
+
+    const statsArray = [];
+
+    statsArray.push(stats.lab1);
+    statsArray.push(stats.lab2);
+    statsArray.push(stats.lab3);
+    statsArray.push(stats.lab4);
+    statsArray.push(stats.lab5);
+    statsArray.push(stats.lab6);
+    statsArray.push(stats.lab7);
+    statsArray.push(stats.lab8);
+    statsArray.push(stats.lab9);
+    statsArray.push(stats.lab10);
+    statsArray.push(stats.lab11);
+    statsArray.push(stats.lab12);
+    statsArray.push(stats.lab13);
+    statsArray.push(stats.lab14);
+
+    res.json(statsArray);
   });
 });
 
@@ -767,8 +787,24 @@ router.get('/325', (req, res) => {
           break;
       }
     });
+    const statsArray = [];
 
-    res.json(stats);
+    statsArray.push(stats.lab1);
+    statsArray.push(stats.lab2);
+    statsArray.push(stats.lab3);
+    statsArray.push(stats.lab4);
+    statsArray.push(stats.lab5);
+    statsArray.push(stats.lab6);
+    statsArray.push(stats.lab7);
+    statsArray.push(stats.lab8);
+    statsArray.push(stats.lab9);
+    statsArray.push(stats.lab10);
+    statsArray.push(stats.lab11);
+    statsArray.push(stats.lab12);
+    statsArray.push(stats.lab13);
+    statsArray.push(stats.lab14);
+
+    res.json(statsArray);
   });
 });
 
@@ -810,5 +846,25 @@ router.get(
       .catch();
   }
 );
+
+/**
+ *
+ * this endpoint will return the people who are logged in!
+ *
+ * @route   GET api/stats/loggedin
+ * @desc    find the users currently logged in
+ *          super simple response
+ * @access  Public
+ */
+
+router.get('/loggedin', (req, res) => {
+  User.find({ isLoggedIn: true })
+    .then(users => {
+      //get the total of objects
+      const total = { count: Object.keys(users).length };
+      return res.json(total);
+    })
+    .catch(err => res.json(err));
+});
 
 module.exports = router;

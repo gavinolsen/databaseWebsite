@@ -1,9 +1,14 @@
+//ERRORS
 export const GET_ERRORS = 'GET_ERRORS';
+//AUTH
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-
+//REQUESTS
 export const GET_REQUESTS = 'GET_REQUESTS';
 export const MAKE_REQUEST = 'MAKE_A_REQUEST';
 export const REQUESTS_LOADING = 'REQUESTS_LOADING';
 export const DELETE_REQUEST = 'DELETE_REQUEST';
-
+//STATS
 export const GET_STATS = 'GET_STATS';
+export const GET_STATS_225 = 'GET_STATS_225';
+export const GET_STATS_325 = 'GET_STATS_325';
+export const GET_LOGGED_IN_USERS = 'GET_LOGGED_IN_USERS';

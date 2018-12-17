@@ -57,7 +57,7 @@ class RequestList extends Component {
               className='col-md-4'
               style={{ marginTop: '10px', marginLeft: '40px' }}
             >
-              main list
+              combined
             </h1>
           </div>
           <div
