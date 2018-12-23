@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
+const getDay = require('date-fns/get_day');
+
 //import our model
 const User = require('../../models/User');
 const StatsRequest = require('../../models/StatsRequest');
@@ -141,7 +143,7 @@ router.get('/225', (req, res) => {
         case '1':
           stats.lab1.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab1.tue = stats.lab1.tue + 1;
               break;
@@ -159,7 +161,7 @@ router.get('/225', (req, res) => {
         case '2':
           stats.lab2.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab2.tue = stats.lab2.tue + 1;
               break;
@@ -177,7 +179,7 @@ router.get('/225', (req, res) => {
         case '3':
           stats.lab3.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab3.tue = stats.lab3.tue + 1;
               break;
@@ -195,7 +197,7 @@ router.get('/225', (req, res) => {
         case '4':
           stats.lab4.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab4.tue = stats.lab4.tue + 1;
               break;
@@ -213,7 +215,7 @@ router.get('/225', (req, res) => {
         case '5':
           stats.lab5.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab5.tue = stats.lab5.tue + 1;
               break;
@@ -231,7 +233,7 @@ router.get('/225', (req, res) => {
         case '6':
           stats.lab6.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab6.tue = stats.lab6.tue + 1;
               break;
@@ -249,7 +251,7 @@ router.get('/225', (req, res) => {
         case '7':
           stats.lab7.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab7.tue = stats.lab7.tue + 1;
               break;
@@ -267,7 +269,7 @@ router.get('/225', (req, res) => {
         case '8':
           stats.lab8.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab8.tue = stats.lab8.tue + 1;
               break;
@@ -285,7 +287,7 @@ router.get('/225', (req, res) => {
         case '9':
           stats.lab9.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab9.tue = stats.lab9.tue + 1;
               break;
@@ -303,7 +305,7 @@ router.get('/225', (req, res) => {
         case '10':
           stats.lab10.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab10.tue = stats.lab10.tue + 1;
               break;
@@ -321,7 +323,7 @@ router.get('/225', (req, res) => {
         case '11':
           stats.lab11.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab11.tue = stats.lab11.tue + 1;
               break;
@@ -339,7 +341,7 @@ router.get('/225', (req, res) => {
         case '12':
           stats.lab12.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab12.tue = stats.lab12.tue + 1;
               break;
@@ -357,7 +359,7 @@ router.get('/225', (req, res) => {
         case '13':
           stats.lab13.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab13.tue = stats.lab13.tue + 1;
               break;
@@ -373,7 +375,7 @@ router.get('/225', (req, res) => {
 
           break;
         case '14':
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab14.tue = stats.lab14.tue + 1;
               break;
@@ -528,8 +530,8 @@ router.get('/325', (req, res) => {
       //check for the string!!
       //that's what it's saved as
 
-      //request.date.getDay returns a number 1-7!
-      //console.log(request.date.getDay());
+      //getDay request.datereturns a number 1-7!
+      //console.log(getDay(request.date));
 
       //go through and get each of the number of days
       //that each o
@@ -537,7 +539,7 @@ router.get('/325', (req, res) => {
         case '1':
           stats.lab1.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab1.tue = stats.lab1.tue + 1;
               break;
@@ -555,7 +557,7 @@ router.get('/325', (req, res) => {
         case '2':
           stats.lab2.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab2.tue = stats.lab2.tue + 1;
               break;
@@ -573,7 +575,7 @@ router.get('/325', (req, res) => {
         case '3':
           stats.lab3.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab3.tue = stats.lab3.tue + 1;
               break;
@@ -591,9 +593,10 @@ router.get('/325', (req, res) => {
         case '4':
           stats.lab4.requests.push(request);
 
-          console.log('date' + request.date.getDay());
+          //console.logetDay request.datefunction');
+          //getDay(request.daterequest.date));
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab4.tue = stats.lab4.tue + 1;
               break;
@@ -611,7 +614,7 @@ router.get('/325', (req, res) => {
         case '5':
           stats.lab5.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab5.tue = stats.lab5.tue + 1;
               break;
@@ -629,7 +632,7 @@ router.get('/325', (req, res) => {
         case '6':
           stats.lab6.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab6.tue = stats.lab6.tue + 1;
               break;
@@ -647,7 +650,7 @@ router.get('/325', (req, res) => {
         case '7':
           stats.lab7.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab7.tue = stats.lab7.tue + 1;
               break;
@@ -665,7 +668,7 @@ router.get('/325', (req, res) => {
         case '8':
           stats.lab8.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab8.tue = stats.lab8.tue + 1;
               break;
@@ -683,7 +686,7 @@ router.get('/325', (req, res) => {
         case '9':
           stats.lab9.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab9.tue = stats.lab9.tue + 1;
               break;
@@ -701,7 +704,7 @@ router.get('/325', (req, res) => {
         case '10':
           stats.lab10.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab10.tue = stats.lab10.tue + 1;
               break;
@@ -719,7 +722,7 @@ router.get('/325', (req, res) => {
         case '11':
           stats.lab11.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab11.tue = stats.lab11.tue + 1;
               break;
@@ -737,7 +740,7 @@ router.get('/325', (req, res) => {
         case '12':
           stats.lab12.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab12.tue = stats.lab12.tue + 1;
               break;
@@ -755,7 +758,7 @@ router.get('/325', (req, res) => {
         case '13':
           stats.lab13.requests.push(request);
 
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab13.tue = stats.lab13.tue + 1;
               break;
@@ -771,7 +774,7 @@ router.get('/325', (req, res) => {
 
           break;
         case '14':
-          switch (request.date.getDay()) {
+          switch (getDay(request.date)) {
             case 2:
               stats.lab14.tue = stats.lab14.tue + 1;
               break;

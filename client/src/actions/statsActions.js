@@ -35,8 +35,8 @@ export const getStats225 = () => dispatch => {
   axios
     .get('/api/stats/225')
     .then(res => {
-      console.log('getting 225 stats');
-      console.log(res.data);
+      //console.log('getting 225 stats');
+      //console.log(res.data);
       dispatch({
         type: GET_STATS_225,
         payload: res.data
@@ -58,8 +58,8 @@ export const getStats325 = () => dispatch => {
   axios
     .get('/api/stats/325')
     .then(res => {
-      console.log('getting 325 stats');
-      console.log(res.data);
+      //console.log('getting 325 stats');
+      //console.log(res.data);
       dispatch({
         type: GET_STATS_325,
         payload: res.data

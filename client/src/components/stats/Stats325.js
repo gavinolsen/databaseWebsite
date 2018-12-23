@@ -27,6 +27,14 @@ class Stats325 extends Component {
     const { stats325 } = this.props.stats;
     //I now have an array of labs in stats325
 
+    // console.log('logging from Stats325.js');
+    // console.log(stats325);
+
+    // if (stats325[3]) {
+    //   console.log('should be saturday!');
+    //   console.log(stats325[3].requests[0].date.getDay());
+    // }
+
     const stats = stats325.map((lab, index) => (
       <tr key={index}>
         <td>{index + 1}</td>

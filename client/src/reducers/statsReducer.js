@@ -17,16 +17,16 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_STATS:
-      console.log('getting 325 stats');
-      console.log(action.payload);
+      //console.log('getting 325 stats');
+      //console.log(action.payload);
       return {
         ...state,
         requests: action.payload.requests,
         logins: action.payload.logins
       };
     case GET_STATS_225:
-      console.log('getting 225 stats');
-      console.log(action.payload);
+      //console.log('getting 225 stats');
+      //console.log(action.payload);
       return {
         ...state,
         stats225: action.payload
