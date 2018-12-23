@@ -593,8 +593,8 @@ router.get('/325', (req, res) => {
         case '4':
           stats.lab4.requests.push(request);
 
-          //console.logetDay request.datefunction');
-          //getDay(request.daterequest.date));
+          console.log('getDay function in action!');
+          console.log(getDay(request.date));
 
           switch (getDay(request.date)) {
             case 2:
