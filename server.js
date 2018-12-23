@@ -40,11 +40,21 @@ app.use('/api/users', users);
 app.use('/api/requests', requests);
 app.use('/api/stats', stats);
 
+if (process.env.NODE_ENV === 'production') {
+  //set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 //and listen
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
 /**
+ *
  *
  * make a way to track current logged in users
  * TODO --> make variable in /models/User.js, then use it in the routes

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { GET_STATS, GET_STATS_225, GET_STATS_325, GET_ERRORS } from './types';
+import {
+  GET_STATS,
+  GET_STATS_225,
+  GET_STATS_325,
+  GET_ERRORS,
+  GET_LOGGED_IN_USERS
+} from './types';
 
 //file where we make all the requests
 
@@ -52,6 +58,29 @@ export const getStats325 = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_STATS_325,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      //dispatch must have a type
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    });
+};
+
+export const getLoggedInUsers = () => dispatch => {
+  axios
+    .get('/api/stats/loggedin')
+    .then(res => {
+      console.log(res.data);
+
+      //get the logged in users
+      dispatch({
+        type: GET_LOGGED_IN_USERS,
         payload: res.data
       });
     })

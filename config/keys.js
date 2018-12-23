@@ -2,19 +2,8 @@
 //mongo key when we get the dang
 //internet up and running
 
-module.exports = {
-  mongoURI:
-    'mongodb://studentdb:F4nt4sticStud3nt7756@ds052837.mlab.com:52837/databasewebsite',
-  secretOrKey: 'secretOrKey',
-  adminUsers: {
-    users: [
-      'mclaughlinm@byui.edu',
-      'enk13001@byui.edu',
-      'drgmolsen@gmail.com',
-      'ols15015@byui.edu'
-    ]
-  }
-};
-
-//username studentdb
-//password F4nt4sticStud3nt7756
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./keys_prod');
+} else {
+  module.exports = require('./keys_dev');
+}

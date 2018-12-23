@@ -18,11 +18,17 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const loginUser = userData => dispatch => {
+  console.log('authorizing user');
+
+  console.log(userData);
   axios
     .post('/api/users/login', userData)
     .then(res => {
       //save to local storage
       //extract it from param
+
+      console.log('authorizing user');
+
       const { token, isAdmin } = res.data;
 
       localStorage.setItem('jwtToken', token);
@@ -34,12 +40,9 @@ export const loginUser = userData => dispatch => {
 
       dispatch(setCurrentUser(decoded, isAdmin));
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 //set logged in user
@@ -68,5 +71,5 @@ export const logoutUser = userData => dispatch => {
     .then(res => {
       res.json(res);
     })
-    .catch();
+    .catch(err => console.log(err));
 };
