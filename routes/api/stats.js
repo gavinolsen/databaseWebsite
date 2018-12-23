@@ -595,6 +595,8 @@ router.get('/325', (req, res) => {
 
           console.log('getDay function in action!');
           console.log(getDay(request.date));
+          console.log('the date');
+          console.log(request.date);
 
           switch (getDay(request.date)) {
             case 2:
