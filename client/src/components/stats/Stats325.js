@@ -5,6 +5,8 @@ import { fetchStats, getStats325 } from '../../actions/statsActions';
 import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 
+import getDay from 'date-fns/get_day';
+
 class Stats325 extends Component {
   componentDidMount() {
     //if (!this.props.auth.isAdmin) {
@@ -27,13 +29,13 @@ class Stats325 extends Component {
     const { stats325 } = this.props.stats;
     //I now have an array of labs in stats325
 
-    // console.log('logging from Stats325.js');
-    // console.log(stats325);
+    console.log('logging from Stats325.js');
+    console.log(stats325);
 
-    // if (stats325[3]) {
-    //   console.log('should be saturday!');
-    //   console.log(stats325[3].requests[0].date.getDay());
-    // }
+    if (stats325[3]) {
+      console.log('should be saturday!');
+      console.log(getDay(stats325[3].requests[0].date));
+    }
 
     const stats = stats325.map((lab, index) => (
       <tr key={index}>
