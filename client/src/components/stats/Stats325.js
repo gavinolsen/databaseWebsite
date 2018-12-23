@@ -23,26 +23,81 @@ class Stats325 extends Component {
     this.props.fetchStats();
   };
 
+  organizeStats = stats325 => {
+    console.log('starting organizeStats with: ');
+    console.log(stats325);
+
+    const daysByLab = [
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab1
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab2
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab3
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab4
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab5
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab6
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab7
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab8
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab9
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab10
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab11
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab12
+      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab13
+      { lab: { tue: 0, thu: 0, sat: 0 } } //lab14
+    ];
+
+    var i;
+    var j;
+    for (i = 0; i < stats325.length; i++) {
+      // console.log('these are the original stats in first loop');
+      // console.log(stats325);
+      for (j = 0; j < stats325[i].requests.length; j++) {
+        // console.log('here are the stats for the inner loop');
+        // console.log(stats325[i]);
+        // console.log("here's the actual date in the inner loop");
+        // console.log(stats325[i].requests[j]);
+        // console.log('here is the day!');
+        // console.log(getDay(stats325[i].requests[j].date));
+
+        switch (getDay(stats325[i].requests[j].date)) {
+          case 6:
+            daysByLab[i].lab.sat = daysByLab[i].lab.sat + 1;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    // console.log('leaving function with: ');
+    // console.log(daysByLab);
+
+    return daysByLab;
+  };
+
   render() {
     //const { logins, requests } = this.props.stats;
 
     const { stats325 } = this.props.stats;
     //I now have an array of labs in stats325
 
-    console.log('logging from Stats325.js');
-    console.log(stats325);
+    // console.log('logging from Stats325.js');
+    // console.log(stats325);
 
-    if (stats325[3]) {
-      console.log('should be saturday!');
-      console.log(getDay(stats325[3].requests[0].date));
-    }
+    // if (stats325[3]) {
+    //   console.log('should be saturday!');
+    //   console.log(getDay(stats325[3].requests[0].date));
+    // }
 
-    const stats = stats325.map((lab, index) => (
+    const newStats = this.organizeStats(stats325);
+
+    // console.log('here are the returned stats');
+    // console.log(newStats);
+
+    const stats = newStats.map((lab, index) => (
       <tr key={index}>
         <td>{index + 1}</td>
         <td>{lab.tue}</td>
         <td>{lab.thu}</td>
-        <td>{lab.sat}</td>
+        <td>{lab.lab.sat}</td>
         <td>{lab.tue + lab.thu + lab.sat}</td>
       </tr>
     ));
