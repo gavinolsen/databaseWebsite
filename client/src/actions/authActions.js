@@ -18,16 +18,16 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const loginUser = userData => dispatch => {
-  console.log('authorizing user');
+  //console.log('authorizing user');
 
-  console.log(userData);
+  //console.log(userData);
   axios
     .post('/api/users/login', userData)
     .then(res => {
       //save to local storage
       //extract it from param
 
-      console.log('authorizing user');
+      //console.log('authorizing user');
 
       const { token, isAdmin } = res.data;
 

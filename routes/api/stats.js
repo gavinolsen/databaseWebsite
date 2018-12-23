@@ -591,6 +591,8 @@ router.get('/325', (req, res) => {
         case '4':
           stats.lab4.requests.push(request);
 
+          console.log('date' + request.date.getDay());
+
           switch (request.date.getDay()) {
             case 2:
               stats.lab4.tue = stats.lab4.tue + 1;
