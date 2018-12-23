@@ -83,8 +83,8 @@ class Stats325 extends Component {
     // console.log(stats325);
 
     // if (stats325[3]) {
-    //   console.log('should be saturday!');
-    //   console.log(getDay(stats325[3].requests[0].date));
+    //   console.log('should be saturday!')
+    //   console.log(getDay(stats325[3].requests[0].date))
     // }
 
     const newStats = this.organizeStats(stats325);
