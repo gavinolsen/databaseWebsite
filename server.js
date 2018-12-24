@@ -70,5 +70,4 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
  *
  * another cool idea would be to list the users by descending number of requests
  * that would be in the stats
- *
  */
