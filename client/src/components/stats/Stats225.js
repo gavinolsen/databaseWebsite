@@ -5,6 +5,8 @@ import { getStats225, fetchStats } from '../../actions/statsActions';
 import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 
+import getDay from 'date-fns/get_day';
+
 class Stats225 extends Component {
   componentDidMount() {
     //we will want to uncomment this before
@@ -23,13 +25,59 @@ class Stats225 extends Component {
     this.props.getStats225();
   };
 
+  organizeStats = stats225 => {
+    const daysByLab = [
+      { tue: 0, thu: 0, sat: 0 }, //lab1
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 } //lab14
+    ];
+
+    var i;
+    var j;
+    for (i = 0; i < stats225.length; i++) {
+      for (j = 0; j < stats225[i].requests.length; j++) {
+        switch (getDay(stats225[i].requests[j].date)) {
+          case 2:
+            daysByLab[i].tue = daysByLab[i].tue + 1;
+            break;
+          case 4:
+            daysByLab[i].thu = daysByLab[i].thu + 1;
+            break;
+          case 6:
+            daysByLab[i].sat = daysByLab[i].sat + 1;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    // console.log('leaving function with: ');
+    // console.log(daysByLab);
+
+    return daysByLab;
+  };
+
   render() {
     //const { logins, requests } = this.props.stats;
 
     const { stats225 } = this.props.stats;
     //I now have an array of labs in stats225
 
-    const stats = stats225.map((lab, index) => (
+    const newStats = this.organizeStats(stats225);
+
+    const stats = newStats.map((lab, index) => (
       <tr key={index}>
         <td>{index + 1}</td>
         <td>{lab.tue}</td>

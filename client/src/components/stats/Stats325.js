@@ -24,42 +24,36 @@ class Stats325 extends Component {
   };
 
   organizeStats = stats325 => {
-    console.log('starting organizeStats with: ');
-    console.log(stats325);
-
     const daysByLab = [
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab1
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab2
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab3
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab4
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab5
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab6
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab7
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab8
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab9
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab10
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab11
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab12
-      { lab: { tue: 0, thu: 0, sat: 0 } }, //lab13
-      { lab: { tue: 0, thu: 0, sat: 0 } } //lab14
+      { tue: 0, thu: 0, sat: 0 }, //lab1
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 },
+      { tue: 0, thu: 0, sat: 0 } //lab14
     ];
 
     var i;
     var j;
     for (i = 0; i < stats325.length; i++) {
-      // console.log('these are the original stats in first loop');
-      // console.log(stats325);
       for (j = 0; j < stats325[i].requests.length; j++) {
-        // console.log('here are the stats for the inner loop');
-        // console.log(stats325[i]);
-        // console.log("here's the actual date in the inner loop");
-        // console.log(stats325[i].requests[j]);
-        // console.log('here is the day!');
-        // console.log(getDay(stats325[i].requests[j].date));
-
         switch (getDay(stats325[i].requests[j].date)) {
+          case 2:
+            daysByLab[i].tue = daysByLab[i].tue + 1;
+            break;
+          case 4:
+            daysByLab[i].thu = daysByLab[i].thu + 1;
+            break;
           case 6:
-            daysByLab[i].lab.sat = daysByLab[i].lab.sat + 1;
+            daysByLab[i].sat = daysByLab[i].sat + 1;
             break;
           default:
             break;
@@ -97,7 +91,7 @@ class Stats325 extends Component {
         <td>{index + 1}</td>
         <td>{lab.tue}</td>
         <td>{lab.thu}</td>
-        <td>{lab.lab.sat}</td>
+        <td>{lab.sat}</td>
         <td>{lab.tue + lab.thu + lab.sat}</td>
       </tr>
     ));
