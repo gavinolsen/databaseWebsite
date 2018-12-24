@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const body_parser = require('body-parser');
 const passport = require('passport');
 
+const path = require('path');
+
 //set up the app
 const app = express();
 //and setup the middleware
