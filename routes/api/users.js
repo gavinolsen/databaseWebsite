@@ -13,7 +13,7 @@ const validateLoginInput = require('../../validation/login');
 
 //get the keys
 const keys = require('../../config/keys');
-const adminUsers = require('../../config/keys').adminUsers;
+const adminUsers = require('../../config/adminUsers').adminUsers.users;
 
 /**
  * @route   GET api/users/test
@@ -273,7 +273,7 @@ router.post('/register', (req, res) => {
     });
 
     //this works
-    if (adminUsers.users.includes(req.body.email.toString())) {
+    if (adminUsers.includes(req.body.email.toString())) {
       // i want this to work! I'll test it later
       newUser.isAdmin = true;
     }

@@ -127,7 +127,11 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.password2}
                 />
-                <input type='submit' className='btn btn-info btn-block mt-4' />
+                <input
+                  type='submit'
+                  className='btn btn-info btn-block mt-4'
+                  style={{ marginBottom: '100px' }}
+                />
               </form>
             </div>
           </div>
