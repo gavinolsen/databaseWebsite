@@ -41,7 +41,10 @@ export const loginUser = userData => dispatch => {
       dispatch(setCurrentUser(decoded, isAdmin));
     })
     .catch(err => {
-      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
     });
 };
 
@@ -71,5 +74,10 @@ export const logoutUser = userData => dispatch => {
     .then(res => {
       res.json(res);
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
