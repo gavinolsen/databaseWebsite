@@ -44,7 +44,8 @@ class MakeRequest extends Component {
     //I won't be able to add a new user till I
     //check the requirements
 
-    //it would be pretty cool to change
+    //properties to check whether or not the user
+    //is in the help list already
     const { user } = this.props.auth;
     const { requests } = this.props.requests;
 
@@ -106,12 +107,12 @@ class MakeRequest extends Component {
     ];
 
     return (
-      //<!-- Register -->
-      <div className='register'>
+      //<!-- Request help -->
+      <div className='request help'>
         <div className='container'>
           <div className='row'>
             <div className='col-md-8 m-auto'>
-              <h1 className='display-4 text-center'>register</h1>
+              <h1 className='display-4 text-center'>request help</h1>
               <p className='lead text-center'>
                 thanks for being here. how can we help you?
               </p>
@@ -132,10 +133,7 @@ class MakeRequest extends Component {
                   onChange={this.onChange}
                   error={errors.comment}
                 />
-                <input
-                  type='submit'
-                  className='btn btn-info btn-block mt-4 submitBtn'
-                />
+                <input type='submit' className='btn btn-info btn-block mt-4' />
               </form>
             </div>
           </div>

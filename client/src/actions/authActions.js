@@ -10,10 +10,14 @@ export const registerUser = (userData, history) => dispatch => {
     .then(res => history.push('/login'))
     .catch(err =>
       //dispatch must have a type
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
+      {
+        if (err.response) {
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          });
+        }
+      }
     );
 };
 
@@ -41,10 +45,12 @@ export const loginUser = userData => dispatch => {
       dispatch(setCurrentUser(decoded, isAdmin));
     })
     .catch(err => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
     });
 };
 
@@ -74,10 +80,12 @@ export const logoutUser = userData => dispatch => {
     .then(res => {
       res.json(res);
     })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+    .catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    });
 };

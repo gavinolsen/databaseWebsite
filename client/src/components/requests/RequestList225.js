@@ -26,6 +26,7 @@ class RequestList225 extends Component {
   render() {
     const { requests } = this.props.requests;
 
+    //this just brings back the name of everyone
     const requests225 = requests.filter(request => request.className === '225');
 
     //here I can check for the loading property!
