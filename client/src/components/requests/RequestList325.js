@@ -39,10 +39,16 @@ class RequestList325 extends Component {
     } else if (requests325) {
       if (Object.keys(requests325).length > 0) {
         requestListContent = <Requests requests={requests325} />;
-      } else {
+      } else if (Object.keys(requests325).length === 0) {
         //htere aren't any requests,
         //prompt the user to make one
+
+        requestListContent = (
+          <h3>There's no requests right now. Be the first</h3>
+        );
+      } else {
         requestListContent = <Spinner />;
+        console.log('length: ' + Object.keys(requests325).length);
       }
     }
 

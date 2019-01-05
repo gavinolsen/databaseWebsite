@@ -40,6 +40,13 @@ class RequestList225 extends Component {
     } else if (requests225) {
       if (Object.keys(requests225).length > 0) {
         requestListContent = <Requests requests={requests225} />;
+      } else if (Object.keys(requests225).length === 0) {
+        //htere aren't any requests,
+        //prompt the user to make one
+
+        requestListContent = (
+          <h3>There's no requests right now. Be the first</h3>
+        );
       } else {
         //htere aren't any requests,
         //prompt the user to make one
