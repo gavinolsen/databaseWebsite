@@ -8,18 +8,24 @@ import isEmpty from '../validation/is-empty';
 const initalState = {
   isAuthenticated: false,
   isAdmin: false,
+  className: '',
   user: {}
 };
 
 export default function(state = initalState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
+      console.log('what is the payload when setting the payload');
+      console.log(action);
+
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         isAdmin: action.isAdmin ? action.isAdmin : state.isAdmin,
+        className: action.className,
         user: action.payload
       };
+
     default:
       return state;
   }

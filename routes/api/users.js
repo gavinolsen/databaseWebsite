@@ -187,6 +187,9 @@ router.post('/login', (req, res) => {
         //sign the token
         //3600 * 24 = 86400
         //the token expires in one day
+
+        //console.log(user);
+
         jwt.sign(
           payload,
           keys.secretOrKey,
@@ -196,7 +199,8 @@ router.post('/login', (req, res) => {
             res.json({
               success: true,
               token: 'Bearer ' + token,
-              isAdmin: user.isAdmin
+              isAdmin: user.isAdmin,
+              className: user.className
             });
           }
         );

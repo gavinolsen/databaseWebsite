@@ -15,12 +15,13 @@ class Dashboard extends Component {
         <p className='lead'>
           This site will help you interact with the teacher and the assistants.
         </p>
-        <p>Please use it regularly</p>
         <Link className='nav-link nav-item' to='/makerequest'>
           request help
         </Link>
         <hr className='my-4' />
-        <p>thanks</p>
+        <p>
+          thanks for being here, and let us know if there's anything we can do
+        </p>
         <p className='lead' />
       </div>
     );

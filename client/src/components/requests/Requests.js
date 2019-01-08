@@ -69,6 +69,7 @@ class Requests extends Component {
       <tr key={request._id}>
         <td>{request.userInfo.name}</td>
         <td>{request.className}</td>
+        <td>{request.comment}</td>
         <td>
           <Moment format='h:mm:ss a'>{request.date}</Moment>
         </td>
@@ -83,7 +84,7 @@ class Requests extends Component {
     return (
       <div>
         <h4 className='mb-4'>
-          <Moment format='MMM DD -- h:mm:ss a'>{this.state.currentTime}</Moment>
+          <Moment format='MMM DD - h:mm:ss a'>{this.state.currentTime}</Moment>
         </h4>
         <h4 className='mb-4'>
           Currently waiting: {this.props.requests.length}{' '}
@@ -93,6 +94,7 @@ class Requests extends Component {
             <tr>
               <th>Student</th>
               <th>Class</th>
+              <th>Comment</th>
               <th />
             </tr>
             {requests}

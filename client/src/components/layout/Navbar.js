@@ -15,7 +15,7 @@ class Navbar extends Component {
   render() {
     //if they are admin, we should render the stats page.
     //otherwise, don't.
-    const { isAuthenticated, user, isAdmin } = this.props.auth;
+    const { isAuthenticated, user, isAdmin, className } = this.props.auth;
 
     const userName = user.name;
 
@@ -34,6 +34,7 @@ class Navbar extends Component {
       </li>
     );
 
+    //console.log(user);
     //add
     const authLinks = (
       <ul className='navbar-nav ml-auto'>
@@ -45,7 +46,7 @@ class Navbar extends Component {
             fontSize: '30px'
           }}
         >
-          {userName}
+          {userName}-{className}
         </li>
         {isAdmin ? adminLinks : null}
         <li className='nav-item nav-link'>
