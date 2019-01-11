@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import Spinner from '../common/Spinner';
 import Requests from './Requests';
 import { Link } from 'react-router-dom';
@@ -23,6 +24,10 @@ class RequestList325 extends Component {
     this.props.deleteRequest(id);
   };
 
+  onClick = () => {
+    this.props.fetchRequests();
+  };
+
   render() {
     const { requests } = this.props.requests;
 
@@ -33,6 +38,7 @@ class RequestList325 extends Component {
     //if they are just
 
     let requestListContent;
+    let refreshButton;
 
     if (requests325 === null) {
       requestListContent = <Spinner />;
@@ -45,6 +51,12 @@ class RequestList325 extends Component {
 
         requestListContent = (
           <h3>There's no requests right now. Be the first</h3>
+        );
+
+        refreshButton = (
+          <Button onClick={this.onClick} className='mb-4'>
+            refresh
+          </Button>
         );
       } else {
         requestListContent = <Spinner />;
@@ -92,6 +104,7 @@ class RequestList325 extends Component {
           </div>
           <div className='row'>
             <div className='col-md-12'>{requestListContent}</div>
+            <div className='col-md-12'>{refreshButton}</div>
           </div>
         </div>
       </div>
