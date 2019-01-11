@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteRequest } from '../../actions/requestActions';
+import { deleteRequest, fetchRequests } from '../../actions/requestActions';
 
 class Requests extends Component {
   constructor(props) {
@@ -32,6 +32,10 @@ class Requests extends Component {
   onDeleteClick = id => {
     console.log(id);
     this.props.deleteRequest(id);
+  };
+
+  onClick = () => {
+    this.props.fetchRequests();
   };
 
   render() {
@@ -89,6 +93,9 @@ class Requests extends Component {
         <h4 className='mb-4'>
           Currently waiting: {this.props.requests.length}{' '}
         </h4>
+        <Button onClick={this.onClick} className='mb-4'>
+          refresh
+        </Button>
         <table className='table'>
           <thead>
             <tr>
@@ -116,5 +123,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteRequest }
+  { fetchRequests, deleteRequest }
 )(Requests);
