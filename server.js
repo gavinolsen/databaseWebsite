@@ -15,16 +15,14 @@ app.use(body_parser.json());
 const users = require('./routes/api/users');
 const requests = require('./routes/api/requests');
 const stats = require('./routes/api/stats');
+const mobile = require('./routes/api/mobile');
 
 const mongoURI = require('./config/keys').mongoURI;
 
 //connect with mongoose after internet is up..
 
 mongoose
-  .connect(
-    mongoURI,
-    { useNewUrlParser: true }
-  )
+  .connect(mongoURI, { useNewUrlParser: true })
   .then(() => console.log('mongo db connected successfully'))
   .catch(err => console.log(err));
 
@@ -38,9 +36,11 @@ require('./config/passport')(passport);
 
 //and set up the port directories
 //with the models we brought in
+//aka the routes we brought in
 app.use('/api/users', users);
 app.use('/api/requests', requests);
 app.use('/api/stats', stats);
+app.use('/api/mobile', mobile);
 
 if (process.env.NODE_ENV === 'production') {
   //set static folder
