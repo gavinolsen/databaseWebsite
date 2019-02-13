@@ -35,9 +35,25 @@ const RequestSchema = new Schema({
     type: String,
     required: true
   },
+  //no default. I need this value to be provided
+  //and be the same for the stats_request date
+  //as well
   date: {
     type: Date,
-    default: Date.now
+    required: true
+  },
+  isBeingHelped: {
+    type: Boolean,
+    default: false
+  },
+  //these are timestamps
+  timeStartedHelp: {
+    type: Number,
+    required: false
+  },
+  timeFinishedHelp: {
+    type: Number,
+    required: false
   }
 });
 

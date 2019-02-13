@@ -80,7 +80,7 @@ export const getLoggedInUsers = () => dispatch => {
   axios
     .get('/api/stats/loggedin')
     .then(res => {
-      console.log(res.data);
+      //console.log(res.data);
 
       //get the logged in users
       dispatch({

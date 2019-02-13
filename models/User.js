@@ -52,6 +52,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  totalTimeBeingHelped: {
+    type: Number,
+    default: 0
   }
 });
 

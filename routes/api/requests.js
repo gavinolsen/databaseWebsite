@@ -44,7 +44,6 @@ router.get('/', (req, res) => {
 //these next two are really for statistics,
 //but i've basically replicated it
 //in the stats.js router file
-
 /**
  * @route   GET api/requests/225
  * @desc    get the requests for the 225 class
@@ -104,17 +103,11 @@ router.post(
       return res.status(404).json(errors);
     }
 
-    //check if the user is already there!!
-    //start by getting them all
-    // console.log(req);
-    // Request.find({ 'userInfo._id': req.user.id.toString() })
-    //   .then(requests => {
-    //     console.log(requests);
-    //   })
-    //   .catch(err => console.log(err));
-
-    //
-    //console.log(req.user);
+    //make a default date!
+    //this date is used as an
+    //identifier. aka foreign key
+    //very important
+    const newDate = Date.now();
 
     //make a new request
     const newRequest = new Request({
@@ -124,7 +117,8 @@ router.post(
       },
       className: req.user.className,
       labNumber: req.body.labNumber,
-      comment: req.body.comment
+      comment: req.body.comment,
+      date: newDate
     });
 
     //make a stats request
@@ -134,7 +128,8 @@ router.post(
         name: req.user.name
       },
       className: req.user.className,
-      labNumber: req.body.labNumber
+      labNumber: req.body.labNumber,
+      date: newDate
     });
 
     //save the request for viewing purposes as well as
@@ -154,6 +149,46 @@ router.post(
         res.json({ user, newRequest }); //spit back the results of both
       })
       .catch(err => res.status(404).json(err));
+  }
+);
+
+/**
+ * @route   POST api/requests/help/:id
+ * @desc    for the TA's to start helping a student
+ * @access  Private
+ */
+router.post(
+  '/help/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Request.findById(req.params.id).then(request => {
+      if (!request) {
+        errors.norequest = 'no request by that id';
+        return res.status(404).json(errors);
+      }
+
+      //make sure you uncomment this!
+      if (!req.user.isAdmin) {
+        //the user isn't authorized for this
+        errors.noauth = 'you are not authorized to perform this action';
+        return res.status(403).json(errors);
+      }
+
+      //they are authorized, and the request exists.
+      //now mark the request as being helped!
+      request.isBeingHelped = true;
+      request.timeStartedHelp = Date.now();
+
+      request.save().catch(err => console.log(err));
+
+      //and send back what you got!
+      res.json({
+        success: true,
+        request: request
+      });
+    });
   }
 );
 
@@ -178,7 +213,8 @@ router.delete(
 
         //console.log(req.user);
 
-        //this will work for now
+        //this will work for now,
+        //just checking if they can delete the request
         if (
           request.userInfo._id.toString() !== req.user._id.toString() &&
           !req.user.isAdmin
@@ -187,6 +223,47 @@ router.delete(
           errors.noauth = 'you are not authorized to delete that request';
           return res.status(403).json(errors);
         }
+
+        let currentTime = Date.now();
+
+        //get the stats request, and set the values
+        //timeStartedHelp
+        //and
+        //timeFinishedHelp
+        //to the values in this request
+        //divide these values by (1000 * 3600)
+        // and you'll get the time in minutes!
+        let timeBeingHelped = currentTime - request.timeStartedHelp;
+
+        StatsRequest.findOne({ date: request.date }).then(stats_request => {
+          stats_request.timeStartedHelp = request.timeStartedHelp;
+          stats_request.timeFinishedHelp = currentTime;
+
+          stats_request.save().catch(err => console.log(err));
+
+          /*********************
+           *  this is where I'll have
+           *  to modify the users
+           *  'totalTimeBeingHelped' property
+           *  by subtracting the time they started
+           *  being helped from the time they stoped
+           * ***************** */
+
+          User.findById(request.userInfo._id).then(user => {
+            //change the dates depending on the properties
+            //stated above,
+            //timeStartedHelp - timeFinishedHelp
+            user.isWaitingOnHelp = false;
+            //not sure about the units, but they type is Number for now!
+            user.totalTimeBeingHelped =
+              user.totalTimeBeingHelped + timeBeingHelped;
+            user
+              .save()
+              .then()
+              .catch(err => res.json(err));
+          });
+        });
+
         //the request can now be deleted
         request
           .remove()
@@ -195,14 +272,6 @@ router.delete(
 
         //request has been removed. now change the user's
         //isWaitingOnHelp property to false
-
-        User.findById(request.userInfo._id).then(user => {
-          user.isWaitingOnHelp = false;
-          user
-            .save()
-            .then()
-            .catch(err => res.json(err));
-        });
       })
       .catch(err => {
         errors.norequest = "there's no request by that id";

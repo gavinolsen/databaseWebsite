@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import { GET_ERRORS, SET_CURRENT_USER, CLEAR_USER } from './types';
 
 export const registerUser = (userData, history) => dispatch => {
   axios
@@ -36,7 +36,7 @@ export const loginUser = userData => dispatch => {
 
       const { token, isAdmin, className } = res.data;
 
-      console.log(className);
+      //console.log(className);
       localStorage.setItem('jwtToken', token);
       //call the function that we have set up
       setAuthToken(token);
@@ -81,6 +81,11 @@ export const logoutUser = userData => dispatch => {
   axios
     .post('/api/users/logout', userData)
     .then(res => {
+      dispatch({
+        type: CLEAR_USER,
+        payload: {}
+      });
+
       res.json(res);
     })
     .catch(err => {

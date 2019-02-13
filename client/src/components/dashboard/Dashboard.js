@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 //THIS COMPOENT SHOULD HAVE TWO LINKS TO THE LISTS
 
 class Dashboard extends Component {
+  componentWillMount() {
+    //console.log(this.props.auth.isAuthenticated);
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push('/login');
+    }
+  }
+
   render() {
     const { user } = this.props.auth;
 
@@ -36,4 +43,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(withRouter(Dashboard));

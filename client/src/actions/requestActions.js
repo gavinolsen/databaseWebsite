@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 //get types
-import { GET_REQUESTS, DELETE_REQUEST, GET_ERRORS } from './types';
+import {
+  GET_REQUESTS,
+  DELETE_REQUEST,
+  GET_ERRORS,
+  START_HELPING
+} from './types';
 
 export const fetchRequests = history => dispatch => {
   //dispatch requests loading
@@ -58,50 +63,24 @@ export const deleteRequest = id => dispatch => {
   });
 };
 
-/**
- * 
- * import axios from 'axios';
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING} from './types';
-
-export const getItems = () => dispatch => {
-  dispatch(setItemsLoading());
+export const startHelpingRequest = (id, history) => dispatch => {
   axios
-    .get('/api/items')
-    .then(res => 
+    .post(`/api/requests/help/${id}`)
+    .then(res => {
       dispatch({
-        type: GET_ITEMS,
-        payload: res.data
-      })
-    )
+        type: START_HELPING,
+        payload: res.data.request
+      });
+
+      history.push('/requestlist');
+    })
+    .catch(err => {
+      if (err.response) {
+        //dispatch must have a type
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      }
+    });
 };
-
-export const addItem = (item) => dispatch => {
-  axios
-    .post('/api/items', item)
-    .then(res => 
-      dispatch({
-        type: ADD_ITEM,
-        payload: res.data
-      })
-    )
-};
-
-export const deleteItem = (id) => dispatch => {
-  axios.delete(`/api/items/${id}`).then(res => 
-      dispatch({
-        type: DELETE_ITEM,
-        payload: id
-      })
-    );
-};
-
-
-export const setItemsLoading = () => {
-  return {
-    type: ITEMS_LOADING
-  }
-}
- * 
- * 
- * 
- */

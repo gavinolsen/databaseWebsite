@@ -24,12 +24,11 @@ const keys = require('../../config/keys');
 router.get('/test', (req, res) => res.json({ msg: 'mobile works' }));
 
 /**
- * @route   POST api/mobile/login
+ * @route   POST api/mobile/user/login
  * @desc    Let the users log in
  * @access  Public
  */
-
-router.post('/login', (req, res) => {
+router.post('/users/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -59,6 +58,19 @@ router.post('/login', (req, res) => {
         //mern stack and the app is that I won't have a
         //place to keep all of the data, so I'll need to
         //pass the user along with this, to keep in the app.
+        //plus, there isn't a need to pass the password hashed
+        //in plain text, not to mention other data.
+
+        newUserObject = {
+          numberOfRequests: user.numberOfRequests,
+          timesLoggedIn: user.timesLoggedIn,
+          isAdmin: user.isAdmin,
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          className: user.className
+        };
+
         jwt.sign(
           payload,
           keys.secretOrKey,
@@ -68,13 +80,12 @@ router.post('/login', (req, res) => {
             res.json({
               success: true,
               token: 'Bearer ' + token,
-              user: user
+              user: newUserObject
             });
           }
         );
 
         //the user is logged in, you can track the stats here!!!
-
         //here I want to track the number of times
         //that the student logs in :)
         //and this works. No results are
@@ -100,5 +111,80 @@ router.post('/login', (req, res) => {
     });
   });
 });
+
+/**
+ * 
+ * I'll have to modify this to get all of the info from the body!!!
+ * 
+ * /**
+ * @route   POST api/mobile/request
+ * @desc    make a request
+ * @access  Private
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    //validate input
+    const { errors, isValid } = validateRequestInput(req.body);
+    if (!isValid) {
+      return res.status(404).json(errors);
+    }
+
+    //check if the user is already there!!
+    //start by getting them all
+    // console.log(req);
+    // Request.find({ 'userInfo._id': req.user.id.toString() })
+    //   .then(requests => {
+    //     console.log(requests);
+    //   })
+    //   .catch(err => console.log(err));
+
+    //
+    //console.log(req.user);
+
+    //make a new request
+    const newRequest = new Request({
+      userInfo: {
+        _id: req.user.id,
+        name: req.user.name
+      },
+      className: req.user.className,
+      labNumber: req.body.labNumber,
+      comment: req.body.comment
+    });
+
+    //make a stats request
+    const newStatsRequest = new StatsRequest({
+      userInfo: {
+        _id: req.user.id,
+        name: req.user.name
+      },
+      className: req.user.className,
+      labNumber: req.body.labNumber
+    });
+
+    //save the request for viewing purposes as well as
+    //statistics
+    newRequest.save().catch(err => res.status(404).json(err));
+    newStatsRequest.save().catch(err => res.status(404).json(err));
+
+    //now increment the users numberOfReqests.
+    User.findById(req.user.id)
+      .then(user => {
+        user.numberOfRequests = user.numberOfRequests + 1; //increment the number of requests
+        user.isWaitingOnHelp = true;
+        user
+          .save()
+          .then()
+          .catch(err => res.status); //save the request
+        res.json({ user, newRequest }); //spit back the results of both
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+ * 
+ * 
+ * 
+ */
 
 module.exports = router;

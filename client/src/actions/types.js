@@ -2,10 +2,12 @@
 export const GET_ERRORS = 'GET_ERRORS';
 //AUTH
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const CLEAR_USER = 'CLEAR_USER';
 //REQUESTS
 export const GET_REQUESTS = 'GET_REQUESTS';
 export const MAKE_REQUEST = 'MAKE_A_REQUEST';
 export const REQUESTS_LOADING = 'REQUESTS_LOADING';
+export const START_HELPING = 'START_HELPING';
 export const DELETE_REQUEST = 'DELETE_REQUEST';
 //STATS
 export const GET_STATS = 'GET_STATS';

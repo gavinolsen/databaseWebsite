@@ -185,15 +185,13 @@ router.post('/login', (req, res) => {
           name: user.name
         };
         //sign the token
-        //3600 * 24 = 86400
-        //the token expires in one day
-
+        //the token expires in fourd days
         //console.log(user);
 
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 86400000 },
+          { expiresIn: '4 days' },
           (err, token) => {
             if (err) throw err;
             res.json({
@@ -206,7 +204,6 @@ router.post('/login', (req, res) => {
         );
 
         //the user is logged in, you can track the stats here!!!
-
         //here I want to track the number of times
         //that the student logs in :)
         //and this works. No results are

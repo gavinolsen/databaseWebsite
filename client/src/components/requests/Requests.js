@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteRequest, fetchRequests } from '../../actions/requestActions';
+import {
+  deleteRequest,
+  fetchRequests,
+  startHelpingRequest
+} from '../../actions/requestActions';
+import RequestRow from './RequestRow';
 
 class Requests extends Component {
   constructor(props) {
@@ -20,6 +26,9 @@ class Requests extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push('/login');
+    }
     this.interval = setInterval(() => this.tick(), 1000);
   }
 
@@ -30,8 +39,13 @@ class Requests extends Component {
   }
 
   onDeleteClick = id => {
-    console.log(id);
+    //console.log(id);
     this.props.deleteRequest(id);
+  };
+
+  onHelpClick = id => {
+    console.log(id);
+    this.props.startHelpingRequest(id);
   };
 
   onClick = () => {
@@ -39,50 +53,16 @@ class Requests extends Component {
   };
 
   render() {
-    const { user, isAdmin } = this.props.auth;
-
-    let buttonContent;
-
-    const determineButton = (request_user_id, request_id) => {
-      if (user.id === request_user_id || isAdmin) {
-        buttonContent = (
-          <Button
-            className='remove-btn'
-            color='danger'
-            size='sm'
-            onClick={this.onDeleteClick.bind(this, request_id)}
-            style={{
-              float: 'right',
-              marginTop: '0px',
-              verticalAlign: 'middle'
-            }}
-          >
-            &times;
-          </Button>
-        );
-        return true;
-      } else {
-        return false;
-      }
-    };
+    const { isAdmin } = this.props.auth;
 
     //moment().format('MMMM Do YYYY, h:mm:ss a');
     //the last part will give us the part we want!!!
 
+    ///console.log('logging requests for debugging');
+    //console.log(this.props.requests);
+
     const requests = this.props.requests.map(request => (
-      <tr key={request._id}>
-        <td>{request.userInfo.name}</td>
-        <td>{request.className}</td>
-        <td>{request.comment}</td>
-        <td>
-          <Moment format='h:mm:ss a'>{request.date}</Moment>
-        </td>
-        <td>
-          {determineButton(request.userInfo._id, request._id)
-            ? buttonContent
-            : null}
-        </td>
-      </tr>
+      <RequestRow key={request._id} request={request} />
     ));
 
     return (
@@ -100,6 +80,7 @@ class Requests extends Component {
           <thead>
             <tr>
               <th>Student</th>
+              <th>{isAdmin ? 'Help' : null}</th>
               <th>Class</th>
               <th>Comment</th>
               <th />
@@ -123,5 +104,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchRequests, deleteRequest }
-)(Requests);
+  { fetchRequests, deleteRequest, startHelpingRequest }
+)(withRouter(Requests));
