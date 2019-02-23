@@ -18,6 +18,8 @@ import NotFound from './components/not-found/NotFound';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import Adbar from './components/layout/Adbar';
+
 import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import MakeRequest from './components/requests/MakeRequest';
@@ -58,6 +60,7 @@ class App extends Component {
         <Router>
           <div className='App'>
             <Navbar />
+            <Adbar />
             <Route exact path='/' component={Landing} />
             <div className='container'>
               <Route exact path='/login' component={Login} />
