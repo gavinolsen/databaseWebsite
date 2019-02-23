@@ -60,7 +60,6 @@ class App extends Component {
         <Router>
           <div className='App'>
             <Navbar />
-            <Adbar />
             <Route exact path='/' component={Landing} />
             <div className='container'>
               <Route exact path='/login' component={Login} />
