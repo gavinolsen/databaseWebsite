@@ -7,7 +7,6 @@ import {
   deleteRequest,
   startHelpingRequest
 } from '../../actions/requestActions';
-import { type } from 'os';
 
 /**
  * this class was created to be able to distinguish the
@@ -76,7 +75,7 @@ class RequestRow extends Component {
           new Date(request.timeStartedHelp).getTime() - Date.now()
         );
         var minutes = Math.floor(((diff % 86400000) % 3600000) / 60000);
-        var seconds = Math.floor(((diff % 86400000) % 3600000) / 3600000);
+        //var seconds = Math.floor(((diff % 86400000) % 3600000) / 3600000);
 
         return <h3>{minutes} min</h3>;
       }

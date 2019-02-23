@@ -24,7 +24,7 @@ const keys = require('../../config/keys');
 router.get('/test', (req, res) => res.json({ msg: 'mobile works' }));
 
 /**
- * @route   POST api/mobile/user/login
+ * @route   POST api/mobile/users/login
  * @desc    Let the users log in
  * @access  Public
  */
@@ -50,17 +50,9 @@ router.post('/users/login', (req, res) => {
           id: user.id,
           name: user.name
         };
-        //sign the token
-        //3600 * 24 = 86400
-        //the token expires in one day
 
-        //The only difference here between the
-        //mern stack and the app is that I won't have a
-        //place to keep all of the data, so I'll need to
-        //pass the user along with this, to keep in the app.
-        //plus, there isn't a need to pass the password hashed
-        //in plain text, not to mention other data.
-
+        //subtle differences between this and the
+        //object returned in the request
         newUserObject = {
           numberOfRequests: user.numberOfRequests,
           timesLoggedIn: user.timesLoggedIn,
@@ -85,13 +77,7 @@ router.post('/users/login', (req, res) => {
           }
         );
 
-        //the user is logged in, you can track the stats here!!!
-        //here I want to track the number of times
-        //that the student logs in :)
-        //and this works. No results are
-        //given to the server. But there aren't any
-        //errors that I can see
-
+        //keep track of usage statistics
         User.findOne({ email })
           .then(user => {
             user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
@@ -113,15 +99,12 @@ router.post('/users/login', (req, res) => {
 });
 
 /**
- * 
- * I'll have to modify this to get all of the info from the body!!!
- * 
- * /**
- * @route   POST api/mobile/request
+ * @route   POST api/mobile/requests
  * @desc    make a request
  * @access  Private
+ **/
 router.post(
-  '/',
+  '/requests',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     //validate input
@@ -130,37 +113,30 @@ router.post(
       return res.status(404).json(errors);
     }
 
-    //check if the user is already there!!
-    //start by getting them all
-    // console.log(req);
-    // Request.find({ 'userInfo._id': req.user.id.toString() })
-    //   .then(requests => {
-    //     console.log(requests);
-    //   })
-    //   .catch(err => console.log(err));
-
-    //
-    //console.log(req.user);
+    //get the new date to be consistent
+    var newDate = Date.now();
 
     //make a new request
     const newRequest = new Request({
       userInfo: {
-        _id: req.user.id,
-        name: req.user.name
+        _id: req.body.id,
+        name: req.body.name
       },
       className: req.user.className,
       labNumber: req.body.labNumber,
-      comment: req.body.comment
+      comment: req.body.comment,
+      date: newDate
     });
 
     //make a stats request
     const newStatsRequest = new StatsRequest({
       userInfo: {
-        _id: req.user.id,
-        name: req.user.name
+        _id: req.body.id,
+        name: req.body.name
       },
-      className: req.user.className,
-      labNumber: req.body.labNumber
+      className: req.body.className,
+      labNumber: req.body.labNumber,
+      date: newDate
     });
 
     //save the request for viewing purposes as well as
@@ -173,18 +149,141 @@ router.post(
       .then(user => {
         user.numberOfRequests = user.numberOfRequests + 1; //increment the number of requests
         user.isWaitingOnHelp = true;
-        user
-          .save()
-          .then()
-          .catch(err => res.status); //save the request
-        res.json({ user, newRequest }); //spit back the results of both
+        user.save().catch(err => res.status); //save the request
+        res.json({ newRequest }); //spit back the results of both
       })
       .catch(err => res.status(404).json(err));
   }
 );
- * 
- * 
- * 
+
+/**
+ * @route   GET api/mobile/requests
+ * @desc    get the requests for the class
+ * @access  Public
  */
+router.get('/requests', (req, res) => {
+  Request.find({})
+    .then(requests => {
+      const errors = {};
+      if (!requests) {
+        errors.norequests = 'there are no requests';
+        return res.status(404).json(errors);
+      }
+      //and return the requests
+      res.json(requests);
+    })
+    .catch(err => {
+      errors.catch = 'an error was caught';
+      return res.status(404).json(errors, err);
+    });
+});
+
+/**
+ * @route   delete api/mobile/requests/:id
+ * @desc    delete a request, reguardless of class
+ * @access  Private
+ */
+router.delete(
+  '/requests/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    //find the id from the parameters
+    Request.findById(req.params.id)
+      .then(request => {
+        if (!request) {
+          errors.norequest = "there's no request by that id";
+          return res.status(404).json(errors);
+        }
+
+        //I'll only need to pass through the user's id through the body
+        if (
+          request.userInfo._id.toString() !== req.body._id.toString() &&
+          !req.body.isAdmin
+        ) {
+          //the user isn't authorized for this
+          errors.noauth = 'you are not authorized to delete that request';
+          return res.status(403).json(errors);
+        }
+
+        let currentTime = Date.now();
+
+        //get the stats request, and set the values
+        //timeStartedHelp timeFinishedHelp
+        //to the values in this request
+        //divide these values by (1000 * 3600)
+        // and you'll get the time in minutes!
+        let timeBeingHelped = currentTime - request.timeStartedHelp;
+
+        StatsRequest.findOne({ date: request.date }).then(stats_request => {
+          stats_request.timeStartedHelp = request.timeStartedHelp;
+          stats_request.timeFinishedHelp = currentTime;
+
+          stats_request.save().catch(err => console.log(err));
+
+          /*  this is where I'll have
+           *  to modify the users
+           *  'totalTimeBeingHelped' */
+          User.findById(request.userInfo._id).then(user => {
+            user.isWaitingOnHelp = false;
+            //not sure about the units, but they type is Number for now!
+            user.totalTimeBeingHelped =
+              user.totalTimeBeingHelped + timeBeingHelped;
+            user
+              .save()
+              .then()
+              .catch(err => res.json(err));
+          });
+        });
+
+        //the request can now be deleted
+        request
+          .remove()
+          .then(res.json({ success: true }))
+          .catch(err => res.json(err));
+      })
+      .catch(err => {
+        errors.norequest = "there's no request by that id";
+        return res.status(404).json(errors, err);
+      });
+  }
+);
+
+/**
+ * @route   POST api/mobile/requests/help/:id
+ * @desc    for the TA's to start helping a student
+ * @access  Private
+ */
+router.post(
+  '/requests/help/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Request.findById(req.params.id).then(request => {
+      if (!request) {
+        errors.norequest = 'no request by that id';
+        return res.status(404).json(errors);
+      }
+
+      if (!req.body.isAdmin) {
+        errors.noauth = 'you are not authorized to perform this action';
+        return res.status(403).json(errors);
+      }
+
+      //they are authorized, and the request exists
+      request.isBeingHelped = true;
+      request.timeStartedHelp = Date.now();
+      request.save().catch(err => console.log(err));
+
+      //and send back what you got!
+      res.json({
+        success: true,
+        request: request
+      });
+    });
+  }
+);
 
 module.exports = router;
