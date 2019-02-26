@@ -98,6 +98,9 @@ router.post('/users/login', (req, res) => {
   });
 });
 
+
+//the app isn't picking this route up. Not sure why???
+
 /**
  * @route   POST api/mobile/requests
  * @desc    make a request
@@ -119,10 +122,10 @@ router.post(
     //make a new request
     const newRequest = new Request({
       userInfo: {
-        _id: req.body.id,
+        _id: req.body._id,
         name: req.body.name
       },
-      className: req.user.className,
+      className: req.body.className,
       labNumber: req.body.labNumber,
       comment: req.body.comment,
       date: newDate
@@ -131,7 +134,7 @@ router.post(
     //make a stats request
     const newStatsRequest = new StatsRequest({
       userInfo: {
-        _id: req.body.id,
+        _id: req.body._id,
         name: req.body.name
       },
       className: req.body.className,
@@ -145,7 +148,7 @@ router.post(
     newStatsRequest.save().catch(err => res.status(404).json(err));
 
     //now increment the users numberOfReqests.
-    User.findById(req.user.id)
+    User.findById(req.body._id)
       .then(user => {
         user.numberOfRequests = user.numberOfRequests + 1; //increment the number of requests
         user.isWaitingOnHelp = true;
