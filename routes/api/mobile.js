@@ -34,7 +34,8 @@ router.post('/users/login', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
+  const upperEmail = req.body.email;
+  const email = upperEmail.toLowerCase();
   const password = req.body.password;
 
   User.findOne({ email }).then(user => {
