@@ -140,7 +140,8 @@ router.post(
       },
       className: req.body.className,
       labNumber: req.body.labNumber,
-      date: newDate
+      date: newDate,
+      isMobileRequest: true
     });
 
     //save the request for viewing purposes as well as

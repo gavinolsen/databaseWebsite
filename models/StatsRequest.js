@@ -43,6 +43,10 @@ const StatsRequestSchema = new Schema({
   timeFinishedHelp: {
     type: Number,
     required: false
+  },
+  isMobileRequest: {
+    type: Boolean,
+    default: false
   }
 });
 
