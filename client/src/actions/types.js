@@ -14,3 +14,8 @@ export const GET_STATS = 'GET_STATS';
 export const GET_STATS_225 = 'GET_STATS_225';
 export const GET_STATS_325 = 'GET_STATS_325';
 export const GET_LOGGED_IN_USERS = 'GET_LOGGED_IN_USERS';
+//TERMS
+export const GET_TERMS = 'GET_TERMS';
+export const CREATE_TERM = 'CREATE_TERM';
+export const ACTIVATE_TERM = 'ACTIVATE_TERM';
+export const DELETE_TERM = 'DELETE_TERM';
