@@ -16,6 +16,7 @@ const users = require('./routes/api/users');
 const requests = require('./routes/api/requests');
 const stats = require('./routes/api/stats');
 const mobile = require('./routes/api/mobile');
+const terms = require('./routes/api/terms');
 
 const mongoURI = require('./config/keys').mongoURI;
 
@@ -41,6 +42,7 @@ app.use('/api/users', users);
 app.use('/api/requests', requests);
 app.use('/api/stats', stats);
 app.use('/api/mobile', mobile);
+app.use('/api/terms', terms);
 
 if (process.env.NODE_ENV === 'production') {
   //set static folder

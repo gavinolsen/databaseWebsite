@@ -9,6 +9,7 @@ const getDay = require('date-fns/get_day');
 //import our model
 const User = require('../../models/User');
 const StatsRequest = require('../../models/StatsRequest');
+const Term = require('../../models/Term');
 
 //this file will probably be all get requests.
 //people just want a way to query the stats of the labs

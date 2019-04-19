@@ -65,11 +65,11 @@ class RequestRow extends Component {
         return <Moment format='h:mm:ssa'>{request.date}</Moment>;
       } else {
         // let timeComponent = <Moment format='h:mm:ss a'>{this.state.currentTime}</Moment>;
-        console.log('current time');
-        console.log(this.state.currentTime);
-        console.log('time of request');
-        console.log(typeof new Date(request.timeStartedHelp).getTime());
-        console.log(new Date(request.timeStartedHelp).getTime());
+        //console.log('current time');
+        //console.log(this.state.currentTime);
+        //console.log('time of request');
+        //console.log(typeof new Date(request.timeStartedHelp).getTime());
+        //console.log(new Date(request.timeStartedHelp).getTime());
 
         var diff = Math.abs(
           new Date(request.timeStartedHelp).getTime() - Date.now()
