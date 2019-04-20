@@ -18,7 +18,6 @@ import NotFound from './components/not-found/NotFound';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-//import Adbar from './components/layout/Adbar';
 
 import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';

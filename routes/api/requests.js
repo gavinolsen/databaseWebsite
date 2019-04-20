@@ -129,7 +129,8 @@ router.post(
       },
       className: req.user.className,
       labNumber: req.body.labNumber,
-      date: newDate
+      date: newDate,
+      term: req.body.term
     });
 
     //save the request for viewing purposes as well as

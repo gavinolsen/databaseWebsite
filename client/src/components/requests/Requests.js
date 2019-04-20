@@ -39,7 +39,6 @@ class Requests extends Component {
   }
 
   onDeleteClick = id => {
-    //console.log(id);
     this.props.deleteRequest(id);
   };
 

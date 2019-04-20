@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchStats, getLoggedInUsers } from '../../actions/statsActions';
-import { Button, Table } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import TermList from './TermList';
 
 class StatsPage extends Component {
   
@@ -65,21 +66,9 @@ class StatsPage extends Component {
           <h2>requests</h2>
           <h3 style={{ marginLeft: '30px' }}>{requests}</h3>
           <hr className='my-4' />
-          <Table
-          striped
-          bordered
-          condensed='true'
-          hover
-          style={{ marginBottom: '150px' }}
-          >
-          <thead>
-            <tr>
-              <th>Term</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
 
-          </Table>
+          <TermList />
+
           <p className='lead' />
         </div>
       </div>
