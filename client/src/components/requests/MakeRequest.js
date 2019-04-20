@@ -95,11 +95,6 @@ class MakeRequest extends Component {
       comment: this.state.comment,
       term: this.state.activeTerm
     };
-
-    //I'm going to get a lot of these properties from this.props.auth!!!
-
-    //make a request!!!
-
     //and use redux
     this.props.makeRequest (newRequest, this.props.history);
   };
