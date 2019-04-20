@@ -42,6 +42,7 @@ class Requests extends Component {
     this.props.deleteRequest(id);
   };
 
+  //obsolete
   onHelpClick = id => {
     console.log(id);
     this.props.startHelpingRequest(id);
@@ -56,9 +57,6 @@ class Requests extends Component {
 
     //moment().format('MMMM Do YYYY, h:mm:ss a');
     //the last part will give us the part we want!!!
-
-    ///console.log('logging requests for debugging');
-    //console.log(this.props.requests);
 
     const requests = this.props.requests.map(request => (
       <RequestRow key={request._id} request={request} />

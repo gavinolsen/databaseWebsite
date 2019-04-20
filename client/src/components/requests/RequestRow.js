@@ -58,6 +58,8 @@ class RequestRow extends Component {
     let helpButtonContent;
     let deleteButtonContent;
 
+    
+
     //-new Date(request.timeStartedHelp).getTime()
 
     const determineTimeContent = isBeingHelped => {
