@@ -39,10 +39,6 @@ class MakeRequest extends Component {
     }
 
     if (nextProps.terms) {
-      console.log ('got terms in here!');
-
-      console.log ();
-
       var i;
       for (i = 0; i < nextProps.terms.terms.length; i++) {
         console.log (nextProps.terms.terms[i].active);
@@ -50,9 +46,7 @@ class MakeRequest extends Component {
           this.setState ({activeTerm: nextProps.terms.terms[i].term});
         }
       }
-
-      console.log(this.state.activeTerm);
-
+      //console.log(this.state.activeTerm);
     }
   }
 
@@ -99,6 +93,7 @@ class MakeRequest extends Component {
       labNumber: this.state.labNumber,
       className: user.className,
       comment: this.state.comment,
+      term: this.state.activeTerm
     };
 
     //I'm going to get a lot of these properties from this.props.auth!!!
