@@ -3,6 +3,7 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import requestReducer from './requestReducer';
 import statsReducer from './statsReducer';
+import termReducer from './termReducer';
 
 //where we combine everything.
 //this file is referenced as './reducers'
@@ -12,5 +13,6 @@ export default combineReducers({
   auth: authReducer,
   requests: requestReducer,
   errors: errorReducer,
-  stats: statsReducer
+  stats: statsReducer,
+  terms: termReducer
 });
