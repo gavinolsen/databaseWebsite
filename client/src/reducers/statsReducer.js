@@ -4,7 +4,6 @@ import {
   GET_STATS_325,
   GET_LOGGED_IN_USERS
 } from '../actions/types';
-//
 
 const initialState = {
   requests: 0,

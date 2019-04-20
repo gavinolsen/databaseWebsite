@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchStats, getLoggedInUsers } from '../../actions/statsActions';
-import { Button } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class StatsPage extends Component {
+  
   componentDidMount() {
     //if (!this.props.auth.isAdmin) {
     //  this.props.history.push('/dashboard');
@@ -64,7 +65,21 @@ class StatsPage extends Component {
           <h2>requests</h2>
           <h3 style={{ marginLeft: '30px' }}>{requests}</h3>
           <hr className='my-4' />
-          <p>thanks</p>
+          <Table
+          striped
+          bordered
+          condensed='true'
+          hover
+          style={{ marginBottom: '150px' }}
+          >
+          <thead>
+            <tr>
+              <th>Term</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+
+          </Table>
           <p className='lead' />
         </div>
       </div>
@@ -81,7 +96,8 @@ StatsPage.propTypes = {
 
 const mapStateToProps = state => ({
   stats: state.stats,
-  auth: state.auth
+  auth: state.auth,
+  terms: state.terms
 });
 
 export default connect(
