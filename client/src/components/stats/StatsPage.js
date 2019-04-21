@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchStats, getLoggedInUsers } from '../../actions/statsActions';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import SemesterTerm from './SemesterTerm';
+import TermList from './TermList';
 
 class StatsPage extends Component {
 
@@ -61,7 +61,7 @@ class StatsPage extends Component {
           <h3 style={{ marginLeft: '30px' }}>{requests}</h3>
           <hr className='my-4' />
 
-          <SemesterTerm />
+          <TermList />
 
           <p className='lead' />
         </div>
