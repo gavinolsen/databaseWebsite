@@ -4,15 +4,9 @@ import { connect } from 'react-redux';
 import { fetchStats, getLoggedInUsers } from '../../actions/statsActions';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import TermList from './TermList';
+import SemesterTerm from './SemesterTerm';
 
 class StatsPage extends Component {
-  
-  componentDidMount() {
-    //if (!this.props.auth.isAdmin) {
-    //  this.props.history.push('/dashboard');
-    // }
-  }
 
   componentWillMount() {
     this.props.fetchStats();
@@ -67,7 +61,7 @@ class StatsPage extends Component {
           <h3 style={{ marginLeft: '30px' }}>{requests}</h3>
           <hr className='my-4' />
 
-          <TermList />
+          <SemesterTerm />
 
           <p className='lead' />
         </div>
