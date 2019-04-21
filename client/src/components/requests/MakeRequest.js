@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 
 import {makeRequest, fetchRequests} from '../../actions/requestActions';
-import {fetchTerms} from '../../actions/termActions';
+import {fetchTerms} from '../../actions/semesterActions';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 
