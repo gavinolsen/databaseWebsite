@@ -69,7 +69,7 @@ class StatsPage extends Component {
     );
   }
 }
-
+// taken from line 70
 StatsPage.propTypes = {
   fetchStats: PropTypes.func.isRequired,
   getLoggedInUsers: PropTypes.func.isRequired,
