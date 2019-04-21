@@ -1,7 +1,6 @@
 #node modules
 /node_modules
-#client
-/client
+#config
 /config
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
