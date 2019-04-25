@@ -99,9 +99,6 @@ router.post('/users/login', (req, res) => {
   });
 });
 
-
-//the app isn't picking this route up. Not sure why???
-
 /**
  * @route   POST api/mobile/requests
  * @desc    make a request
@@ -116,6 +113,14 @@ router.post(
     if (!isValid) {
       return res.status(404).json(errors);
     }
+
+    //validation within database
+    Request.find({'userInfo._id': req.body._id}).then(user => {
+      if (user) {
+        res.status(400).json({'user error': 'cannot submit request yet while your name is still here'})
+        return
+      }
+    });
 
     //get the new date to be consistent
     var newDate = Date.now();
