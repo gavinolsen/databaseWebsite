@@ -123,7 +123,7 @@ class MakeRequest extends Component {
     return (
       //<!-- Request help -->
       (
-        <div className="request help">
+        <div className="request help" style={{marginBottom: '200px'}}>
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
