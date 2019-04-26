@@ -138,11 +138,9 @@ router.post(
     //statistics
     newRequest.save().catch(err =>{
         console.log('error saving the new request')
-        res.status(404).json(err)
       });
     newStatsRequest.save().catch(err => {
       console.log('error saving new stats request')
-      res.status(404).json(err)
     });
 
     //now increment the users numberOfReqests.
@@ -158,7 +156,6 @@ router.post(
       })
       .catch(err => {
         console.log('error finding user')
-        res.status(404).json(err)
       });
   }
 );
