@@ -100,6 +100,7 @@ router.post(
     //validate input
     const { errors, isValid } = validateRequestInput(req.body);
     if (!isValid) {
+      console.log('request not valid')
       return res.status(404).json(errors);
     }
 
@@ -135,8 +136,14 @@ router.post(
 
     //save the request for viewing purposes as well as
     //statistics
-    newRequest.save().catch(err => res.status(404).json(err));
-    newStatsRequest.save().catch(err => res.status(404).json(err));
+    newRequest.save().catch(err =>{
+        console.log('error saving the new request')
+        res.status(404).json(err)
+      });
+    newStatsRequest.save().catch(err => {
+      console.log('error saving new stats request')
+      res.status(404).json(err)
+    });
 
     //now increment the users numberOfReqests.
     User.findById(req.user.id)
@@ -149,7 +156,10 @@ router.post(
           .catch(err => res.status); //save the request
         res.json({ user, newRequest }); //spit back the results of both
       })
-      .catch(err => res.status(404).json(err));
+      .catch(err => {
+        console.log('error finding user')
+        res.status(404).json(err)
+      });
   }
 );
 
@@ -259,9 +269,7 @@ router.delete(
             user.totalTimeBeingHelped =
               user.totalTimeBeingHelped + timeBeingHelped;
             user
-              .save()
-              .then()
-              .catch(err => res.json(err));
+              .save();
           });
         });
 

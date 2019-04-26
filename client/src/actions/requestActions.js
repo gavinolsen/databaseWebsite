@@ -40,6 +40,7 @@ export const makeRequest = (requestData, history) => dispatch => {
   axios
     .post('/api/requests', requestData)
     .then(res => {
+      console.log(res);
       history.push('/requestlist');
     })
     .catch(err => {
