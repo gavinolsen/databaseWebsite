@@ -2,11 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const body_parser = require('body-parser');
 const passport = require('passport');
-
 const path = require('path');
+const connectDB = require('./config/db');
 
 //set up the app
 const app = express();
+connectDB();
+
 //and setup the middleware
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(body_parser.json());
@@ -18,14 +20,13 @@ const stats = require('./routes/api/stats');
 const mobile = require('./routes/api/mobile');
 const terms = require('./routes/api/terms');
 
-const mongoURI = require('./config/keys').mongoURI;
-
+//const mongoURI = require('./config/keys').mongoURI;
 //connect with mongoose after internet is up..
+// mongoose
+//   .connect(mongoURI, { useNewUrlParser: true })
+//   .then(() => console.log('mongo db connected successfully'))
+//   .catch(err => console.log(err));
 
-mongoose
-  .connect(mongoURI, { useNewUrlParser: true })
-  .then(() => console.log('mongo db connected successfully'))
-  .catch(err => console.log(err));
 
 //make sure we put passport configuration in
 //here as well as ./config/passport.js..
