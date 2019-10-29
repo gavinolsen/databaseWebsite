@@ -20,16 +20,18 @@ const RequestSchema = new Schema({
     },
     name: {
       type: String,
-      default: 'database student'
+      required: true
     }
   },
-  className: {
-    type: String,
-    required: true
-  },
-  labNumber: {
-    type: String,
-    default: '1'
+  queueInfo: {
+    _id: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   },
   comment: {
     type: String,

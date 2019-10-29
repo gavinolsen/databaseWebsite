@@ -23,133 +23,6 @@ const adminUsers = require('../../config/adminUsers').adminUsers.users;
 router.get('/test', (req, res) => res.json({ msg: 'users works' }));
 
 /**
- * @route   GET api/users/all
- * @desc    get all the current users of the app
- * @access  Private
- */
-router.get(
-  '/all',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const errors = {};
-
-    User.find({})
-      .then(users => {
-        if (!users) {
-          errors.nousers = 'there are no users';
-          return res.status(404).json(errors);
-        }
-        res.json(users);
-      })
-      .catch(() => {
-        errors.nousers = 'there are no users';
-        return res.status(404).json(errors);
-      });
-  }
-);
-
-/**
- * @route   GET api/users/225
- * @desc    get all the current users of the app
- *          in the class 225
- * @access  Private
- */
-router.get(
-  '/225',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const errors = {};
-
-    User.find({ className: '225' })
-      .then(users => {
-        if (!users) {
-          errors.nousers = 'there are no users';
-          return res.status(404).json(errors);
-        }
-        res.json(users);
-      })
-      .catch(() => {
-        errors.nousers = 'there are no users';
-        return res.status(404).json(errors);
-      });
-  }
-);
-
-/**
- * @route   GET api/users/325
- * @desc    get all the 325 users
- * @access  Private
- */
-router.get(
-  '/325',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const errors = {};
-
-    User.find({ className: '325' })
-      .then(users => {
-        if (!users) {
-          errors.nousers = 'there are no users';
-          return res.status(404).json(errors);
-        }
-        res.json(users);
-      })
-      .catch(() => {
-        errors.nousers = 'there are no users';
-        return res.status(404).json(errors);
-      });
-  }
-);
-
-//add api's for the 111 and 425 classes
-/**
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-
-/**
- * @route   GET api/users/current
- * @desc    get the current user's data
- * @access  Private
- */
-router.get(
-  '/current',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-      className: req.user.className,
-      numberOfRequests: req.user.numberOfRequests
-    });
-  }
-);
-
-/**
  *
  * I wanna make a logout route that gets called
  * when the user logs out! then I'll be able to
@@ -269,15 +142,8 @@ router.post('/register', (req, res) => {
     //because validation just checks for errors
     const newUser = new User({
       name: req.body.name,
-      email: req.body.email,
-      className: req.body.className
+      email: req.body.email
     });
-
-    //this works
-    if (adminUsers.includes(req.body.email.toString())) {
-      // i want this to work! I'll test it later
-      newUser.isAdmin = true;
-    }
 
     //generate the users salt
     bcrypt.genSalt(10, (err, salt) => {
@@ -316,6 +182,33 @@ router.delete(
       .catch(err =>
         res.status(404).json({ usernotfound: 'no user found with that id' })
       );
+  }
+);
+
+/**
+ * @route   GET api/users/all
+ * @desc    get all the current users of the app
+ * @access  Private
+ */
+
+ 
+
+/**
+ * @route   GET api/users/current
+ * @desc    get the current user's data
+ * @access  Private
+ */
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      className: req.user.className,
+      numberOfRequests: req.user.numberOfRequests
+    });
   }
 );
 

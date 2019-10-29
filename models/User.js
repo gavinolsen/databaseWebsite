@@ -17,31 +17,21 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  className: {
-    type: String,
-    required: true
-  },
-  numberOfRequests: {
-    type: Number,
-    default: 0
-  },
-  timesLoggedIn: {
-    type: Number,
-    default: 0
-  },
-  isLoggedIn: {
-    type: Boolean,
-    default: false
-  },
-  loginDates: [
-    {
-      date: {
-        type: Date,
-        default: Date.now
-      }
+  queues: [{
+    name: {
+      type: String,
+      default: "New Queue"
+    },
+    isAssistant: {
+      type: Boolean,
+      default: false
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
-  ],
-  isAdmin: {
+  }],
+  isLoggedIn: {
     type: Boolean,
     default: false
   },
@@ -52,10 +42,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  },
-  totalTimeBeingHelped: {
-    type: Number,
-    default: 0
   }
 });
 

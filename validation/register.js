@@ -7,7 +7,6 @@ module.exports = function validateRegisterInput(data) {
 
   data.name = !isEmpty(data.name) ? data.name : '';
   data.email = !isEmpty(data.email) ? data.email : '';
-  data.className = !isEmpty(data.className) ? data.className : '';
   data.password = !isEmpty(data.password) ? data.password : '';
   data.password2 = !isEmpty(data.password2) ? data.password2 : '';
 
@@ -29,10 +28,6 @@ module.exports = function validateRegisterInput(data) {
 
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.password = 'password must be between 6 & 30 characters';
-  }
-
-  if (Validator.isEmpty(data.className)) {
-    errors.className = 'must enter a class name';
   }
 
   if (Validator.isEmpty(data.password)) {

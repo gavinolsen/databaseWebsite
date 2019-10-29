@@ -19,6 +19,7 @@ const requests = require('./routes/api/requests');
 const stats = require('./routes/api/stats');
 const mobile = require('./routes/api/mobile');
 const terms = require('./routes/api/terms');
+const queue = require('./routes/api/queue');
 
 //const mongoURI = require('./config/keys').mongoURI;
 //connect with mongoose after internet is up..
@@ -44,6 +45,7 @@ app.use('/api/requests', requests);
 app.use('/api/stats', stats);
 app.use('/api/mobile', mobile);
 app.use('/api/terms', terms);
+app.use('/api/queue', queue);
 
 if (process.env.NODE_ENV === 'production') {
   //set static folder

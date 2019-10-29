@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import contextMenu from './contextMenuWhite.jpg';
 
 //access the auth states
 import PropTypes from 'prop-types';
@@ -10,6 +11,11 @@ class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.logoutUser(this.props.auth.user);
+  }
+
+  contextClick(e) {
+    e.preventDefault()
+    console.log('context clicked');
   }
 
   render() {
@@ -38,16 +44,6 @@ class Navbar extends Component {
     //add
     const authLinks = (
       <ul className='navbar-nav ml-auto'>
-        <li
-          className='nav-item nav-link'
-          style={{
-            color: 'gray',
-            fontSizeAdjust: '-moz-initial',
-            fontSize: '30px'
-          }}
-        >
-          {userName}-{className}
-        </li>
         {isAdmin ? adminLinks : null}
         <li className='nav-item nav-link'>
           <Link
@@ -82,6 +78,9 @@ class Navbar extends Component {
             Logout
           </a>
         </li>
+        <li>
+            <img src={contextMenu} height='60' width='50'></img>
+        </li>
       </ul>
     );
 
@@ -96,6 +95,11 @@ class Navbar extends Component {
           <Link className='nav-link' to='/login'>
             Login
           </Link>
+        </li>
+        <li>
+          <a onClick={this.contextClick.bind(this)} >
+            <img src={contextMenu} height='50' width='5'></img>
+          </a>
         </li>
       </ul>
     );
