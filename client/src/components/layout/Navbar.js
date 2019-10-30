@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import contextMenu from './contextMenuWhite.jpg';
+import Context from './Context';
 
 //access the auth states
 import PropTypes from 'prop-types';
@@ -108,8 +109,11 @@ class Navbar extends Component {
       <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-4'>
         <div className='container'>
           <Link className='navbar-brand' to='/dashboard'>
-            hello database
+            Home
           </Link>
+
+          
+
           <button
             className='navbar-toggler'
             type='button'
@@ -118,8 +122,8 @@ class Navbar extends Component {
           >
             <span className='navbar-toggler-icon' />
           </button>
-          <div className='collapse navbar-collapse' id='mobile-nav'>
-            {isAuthenticated ? authLinks : guestLinks}
+            <div className='nav-link nav-item navbar-nav' style={{float: 'right'}}>
+              <Context />
           </div>
         </div>
       </nav>
