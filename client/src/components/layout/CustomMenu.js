@@ -12,8 +12,12 @@ export default class CustomMenu extends React.Component {
   }
 
   handleChange(e) {
+    console.log('handle change from custom ment')
+    console.log(e.target.value);
     this.setState({ value: e.target.value.toLowerCase().trim() });
   }
+
+  
 
   render() {
     const {
@@ -27,13 +31,6 @@ export default class CustomMenu extends React.Component {
 
     return (
       <div style={style} className={className} aria-labelledby={labeledBy}>
-        <FormControl
-          autoFocus
-          className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
-          onChange={this.handleChange}
-          value={value}
-        />
         <ul className="list-unstyled">
           {React.Children.toArray(children).filter(
             child =>

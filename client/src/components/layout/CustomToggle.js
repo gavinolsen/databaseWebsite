@@ -1,6 +1,4 @@
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import FormControl from 'react-bootstrap/FormControl';
 
 export default class CustomToggle extends React.Component {
   constructor(props, context) {
@@ -13,6 +11,10 @@ export default class CustomToggle extends React.Component {
     e.preventDefault();
 
     this.props.onClick(e);
+
+    console.log('handle click from toggle')
+    console.log(e)
+
   }
 
   render() {
