@@ -10,6 +10,7 @@ const User = require('../../models/User');
 //register the user
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
+const validateAdminInput = require('../../validation/admin');
 
 //get the keys
 const keys = require('../../config/keys');
@@ -186,14 +187,6 @@ router.delete(
 );
 
 /**
- * @route   GET api/users/all
- * @desc    get all the current users of the app
- * @access  Private
- */
-
- 
-
-/**
  * @route   GET api/users/current
  * @desc    get the current user's data
  * @access  Private
@@ -211,5 +204,40 @@ router.get(
     });
   }
 );
+
+/**
+ * @route   POST api/users/addAdmin
+ * @desc    add
+ * @access  Private
+ */
+router.post(
+  '/addAdmin',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+
+    const { errors, isValid } = validateAdminInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const { email, isAdmin } = req.body;
+
+    User.findOne({ email }).then(user => {
+      
+      //check if user exists
+      if (!user) {
+        errors.email = 'There is no user associated with that email';
+        return res.status(400).json(errors);
+      }
+
+      //set the property
+      user.isAdmin = isAdmin;
+
+      //save
+      user.save()
+      .then(user => res.json(user))
+      .catch(err => console.log(err));
+    });
+  });
 
 module.exports = router;

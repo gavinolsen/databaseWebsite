@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import contextMenu from './contextMenuWhite.jpg';
-import Context from './Context';
+import StudentContext from './context/StudentContext';
+import AdminContext from './context/AdminContext';
 
 //access the auth states
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ class Navbar extends Component {
   }
 
   contextClick(e) {
-    e.preventDefault()
+    e.preventDefault();
     console.log('context clicked');
   }
 
@@ -24,16 +24,19 @@ class Navbar extends Component {
     //otherwise, don't.
     const { isAuthenticated, user, isAdmin, className } = this.props.auth;
 
+    console.log('auth: ');
+    console.log(this.props.auth);
+
     const userName = user.name;
 
     const adminLinks = (
-      <li className='nav-item nav-link'>
+      <li className="nav-item nav-link">
         <Link
-          to='/stats'
+          to="/stats"
           style={{
             color: 'gray',
             fontSizeAdjust: '-moz-initial',
-            fontSize: '30px'
+            fontSize: '30px',
           }}
         >
           stats
@@ -41,89 +44,122 @@ class Navbar extends Component {
       </li>
     );
 
-    //console.log(user);
-    //add
-    const authLinks = (
-      <ul className='navbar-nav ml-auto'>
-        {isAdmin ? adminLinks : null}
-        <li className='nav-item nav-link'>
+    const studentContext = (
+      <ul className="navbar-nav ml-auto">
+        <li style={{marginRight: '30px', marginTop: '5px'}}>
           <Link
-            to='/makerequest'
+            to="/makerequest"
             style={{
               color: 'gray',
               fontSizeAdjust: '-moz-initial',
-              fontSize: '30px'
+              fontSize: '30px',
             }}
           >
             help
           </Link>
         </li>
-        <li className='nav-item nav-link'>
+        <li>
+          <StudentContext />
+        </li>
+      </ul>
+    );
+
+    const adminContext = (
+      <ul className="navbar-nav ml-auto">
+        <li style={{marginRight: '30px', marginTop: '5px'}}>
           <Link
-            to='/requestlist'
+            to="/requestlist"
             style={{
               color: 'gray',
               fontSizeAdjust: '-moz-initial',
-              fontSize: '30px'
+              fontSize: '30px',
+            }}
+          >
+            help
+          </Link>
+        </li>
+        <li>
+          <AdminContext />
+        </li>
+      </ul>
+    )
+
+    //console.log(user);
+    //add
+    const authLinks = (
+      <ul className="navbar-nav ml-auto">
+        {isAdmin ? adminLinks : null}
+        <li className="nav-item nav-link">
+          <Link
+            to="/makerequest"
+            style={{
+              color: 'gray',
+              fontSizeAdjust: '-moz-initial',
+              fontSize: '30px',
+            }}
+          >
+            help
+          </Link>
+        </li>
+        <li className="nav-item nav-link">
+          <Link
+            to="/requestlist"
+            style={{
+              color: 'gray',
+              fontSizeAdjust: '-moz-initial',
+              fontSize: '30px',
             }}
           >
             lists
           </Link>
         </li>
-        <li className='nav-item'>
+        <li className="nav-item">
           <a
-            href='/'
+            href="/"
             onClick={this.onLogoutClick.bind(this)}
-            className='nav-link'
+            className="nav-link"
           >
             Logout
           </a>
-        </li>
-        <li>
-            <img src={contextMenu} height='60' width='50'></img>
         </li>
       </ul>
     );
 
     const guestLinks = (
-      <ul className='navbar-nav ml-auto'>
-        <li className='nav-item'>
-          <Link className='nav-link' to='/register'>
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link className="nav-link" to="/register">
             Sign Up
           </Link>
         </li>
-        <li className='nav-item'>
-          <Link className='nav-link' to='/login'>
+        <li className="nav-item">
+          <Link className="nav-link" to="/login">
             Login
           </Link>
-        </li>
-        <li>
-          <a onClick={this.contextClick.bind(this)} >
-            <img src={contextMenu} height='50' width='5'></img>
-          </a>
         </li>
       </ul>
     );
 
     return (
-      <nav className='navbar navbar-expand-sm navbar-dark bg-dark mb-4'>
-        <div className='container'>
-          <Link className='navbar-brand' to='/dashboard'>
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+        <div className="container">
+          <Link className="navbar-brand" to="/dashboard">
             Home
           </Link>
 
-          
-
           <button
-            className='navbar-toggler'
-            type='button'
-            data-toggle='collapse'
-            data-target='#mobile-nav'
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-nav"
           >
-            <span className='navbar-toggler-icon' />
+            <span className="navbar-toggler-icon" />
           </button>
-            <div className='nav-link nav-item navbar-nav' style={{float: 'right'}}>
-              <Context />
+          <div
+            className="nav-link nav-item navbar-nav"
+            style={{ float: 'right' }}
+          >
+            {!isAuthenticated ? guestLinks : isAdmin ? adminContext : studentContext}
           </div>
         </div>
       </nav>
@@ -133,14 +169,11 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);
