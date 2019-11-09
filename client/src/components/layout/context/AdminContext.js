@@ -39,7 +39,7 @@ class AdminContext extends Component {
           </Dropdown.Item>
           <Dropdown.Item>
             <Link
-              to="/requesthelp"
+              to="/makerequest"
               style={{
                 color: 'gray',
                 fontSize: '30px',

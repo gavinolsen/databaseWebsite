@@ -18,7 +18,7 @@ import NotFound from './components/not-found/NotFound';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-
+import HowTo from './components/layout/HowTo';
 import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import MakeRequest from './components/requests/MakeRequest';
@@ -71,6 +71,13 @@ class App extends Component {
                   exact
                   path="/makerequest"
                   component={MakeRequest}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/howto"
+                  component={HowTo}
                 />
               </Switch>
               <Switch>

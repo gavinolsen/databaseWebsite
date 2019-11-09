@@ -55,7 +55,7 @@ class Navbar extends Component {
               fontSize: '30px',
             }}
           >
-            help
+            Make Request
           </Link>
         </li>
         <li>
@@ -75,7 +75,7 @@ class Navbar extends Component {
               fontSize: '30px',
             }}
           >
-            help
+            Request list
           </Link>
         </li>
         <li>
