@@ -23,16 +23,6 @@ const RequestSchema = new Schema({
       required: true
     }
   },
-  queueInfo: {
-    _id: {
-      type: String,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true
-    }
-  },
   comment: {
     type: String,
     required: true

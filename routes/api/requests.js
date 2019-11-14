@@ -128,7 +128,7 @@ router.post(
         _id: req.user.id,
         name: req.user.name
       },
-      className: req.user.className,
+      className: req.user.className || '225',
       labNumber: req.body.labNumber,
       date: newDate,
       term: req.body.term
@@ -138,9 +138,11 @@ router.post(
     //statistics
     newRequest.save().catch(err =>{
         console.log('error saving the new request')
+        console.log(err);
       });
     newStatsRequest.save().catch(err => {
       console.log('error saving new stats request')
+      console.log(err);
     });
 
     //now increment the users numberOfReqests.

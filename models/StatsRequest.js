@@ -47,10 +47,6 @@ const StatsRequestSchema = new Schema({
   isMobileRequest: {
     type: Boolean,
     default: false
-  }, 
-  term: {
-    type: String,
-    required: true
   }
 });
 

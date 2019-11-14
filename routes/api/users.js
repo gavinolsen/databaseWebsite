@@ -89,11 +89,11 @@ router.post('/login', (req, res) => {
           .then(user => {
             user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
             user.isLoggedIn = true;
-            const today = {
-              date: new Date().now
-            };
+            // const today = {
+            //   date: new Date().now
+            // };
 
-            user.loginDates.push(today); //add the current date to the logins!!!
+            // user.loginDates.push(today); //add the current date to the logins!!!
             user.save().catch(err => console.log(err)); //save the user
           })
           .catch(err => console.log(err));
