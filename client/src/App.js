@@ -29,7 +29,10 @@ import StatsPage from './components/stats/StatsPage';
 import Stats225 from './components/stats/Stats225';
 import Stats325 from './components/stats/Stats325';
 
-if (localStorage.jwtToken) {
+console.log('what is the token?');
+console.log(localStorage.getItem('jwtToken'));
+
+if (localStorage.getItem('jwtToken') !== null) {
   //set the auth header token
   setAuthToken (localStorage.jwtToken);
   //decode token and get user info

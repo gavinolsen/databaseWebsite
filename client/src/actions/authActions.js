@@ -68,7 +68,10 @@ export const setCurrentUser = (decoded, isAdmin, className) => {
 
 export const logoutUser = userData => dispatch => {
   //remove the token from local storate
+  console.log('removing local token');
   localStorage.removeItem('jwtToken');
+  console.log('checking local token');
+  console.log(localStorage.getItem('jwtToken'));
   //remove the auth header for future requests
   //we made this in ../utils/setAuthToken.js
   setAuthToken(false);

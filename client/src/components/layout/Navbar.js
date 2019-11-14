@@ -24,8 +24,11 @@ class Navbar extends Component {
     //otherwise, don't.
     const { isAuthenticated, user, isAdmin, className } = this.props.auth;
 
-    console.log('auth: ');
+    console.log('checking the token: ');
+    const token = localStorage.getItem('jwtToken');
     console.log(this.props.auth);
+
+    console.log(token);
 
     const userName = user.name;
 

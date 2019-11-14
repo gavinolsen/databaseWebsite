@@ -60,7 +60,8 @@ router.post('/login', (req, res) => {
         };
         //sign the token
         //the token expires in fourd days
-        //console.log(user);
+        console.log('looking at user: ');
+        console.log(user);
 
         jwt.sign(
           payload,

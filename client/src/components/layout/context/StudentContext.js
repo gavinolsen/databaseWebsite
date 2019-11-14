@@ -14,7 +14,7 @@ class StudentContext extends Component {
 
   //TODO - logout
   onLogoutClick() {
-    console.log('logout')
+    this.props.logoutUser();
   }
 
   render() {
@@ -48,7 +48,7 @@ class StudentContext extends Component {
               How to
             </Link>
           </Dropdown.Item>
-          <Dropdown.Item onSelect={this.onLogoutClick}>
+          <Dropdown.Item onSelect={this.onLogoutClick.bind(this)}>
             <Link
               to="/login"
               style={{

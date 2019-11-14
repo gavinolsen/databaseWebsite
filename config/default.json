@@ -1,3 +1,3 @@
 {
-  "mongoURI": "mongodb+srv://api_access:7aoUeSkK30ZpcYQu@sqcluster-z8ecp.mongodb.net/test?retryWrites=true"
+  "mongoURI": "mongodb://client:B3stcl1ent@ds149404.mlab.com:49404/database-statistic"
 }

@@ -15,34 +15,28 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  queues: [{
-    name: {
-      type: String,
-      default: "New Queue"
-    },
-    isAssistant: {
-      type: Boolean,
-      default: false
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false
-    }
-  }],
+  isAssistant: {
+    type: Boolean,
+    default: false,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   isLoggedIn: {
     type: Boolean,
-    default: false
+    default: false,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
