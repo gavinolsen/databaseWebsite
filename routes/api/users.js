@@ -207,12 +207,12 @@ router.get(
 );
 
 /**
- * @route   POST api/users/addAdmin
- * @desc    add
+ * @route   POST api/users/admin
+ * @desc    add or remove admin
  * @access  Private
  */
 router.post(
-  '/addAdmin',
+  '/admin',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
 
@@ -233,11 +233,27 @@ router.post(
 
       //set the property
       user.isAdmin = isAdmin;
+      user.isAssistant = isAdmin;
 
       //save
       user.save()
       .then(user => res.json(user))
       .catch(err => console.log(err));
+    });
+  });
+
+  /**
+ * @route   GET api/users/admins
+ * @desc    get the admins
+ * @access  Private
+ */
+router.get(
+  '/admins',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    User.find({ isAdmin: true }).then(users => {
+      const simplifiedUsers = users.map(user => ({id: user._id, name: user.name, email: user.email}));
+      res.json({users: simplifiedUsers});
     });
   });
 
