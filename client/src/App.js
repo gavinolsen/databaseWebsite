@@ -28,6 +28,7 @@ import RequestList325 from './components/requests/RequestList325';
 import StatsPage from './components/stats/StatsPage';
 import Stats225 from './components/stats/Stats225';
 import Stats325 from './components/stats/Stats325';
+import Admins from './components/auth/roles/Admins';
 
 console.log('what is the token?');
 console.log(localStorage.getItem('jwtToken'));
@@ -74,6 +75,13 @@ class App extends Component {
                   exact
                   path="/makerequest"
                   component={MakeRequest}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/roles"
+                  component={Admins}
                 />
               </Switch>
               <Switch>

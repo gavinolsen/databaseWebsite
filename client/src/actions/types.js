@@ -3,6 +3,9 @@ export const GET_ERRORS = 'GET_ERRORS';
 //AUTH
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const CLEAR_USER = 'CLEAR_USER';
+export const SET_ADMIN = 'ADD_ADMIN';
+export const ADD_ADMIN = 'CHANGE_ADMIN';
+export const REMOVE_ADMIN = 'REMOVE_ADMIN';
 //REQUESTS
 export const GET_REQUESTS = 'GET_REQUESTS';
 export const MAKE_REQUEST = 'MAKE_A_REQUEST';

@@ -86,9 +86,6 @@ class MakeRequest extends Component {
       term: this.state.activeTerm,
     };
 
-    console.log('worked!');
-    console.log(newRequest);
-
     //and use redux
     this.props.makeRequest(newRequest, this.props.history);
   };

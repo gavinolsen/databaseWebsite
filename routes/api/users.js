@@ -215,13 +215,9 @@ router.post(
   '/admin',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-
-    const { errors, isValid } = validateAdminInput(req.body);
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
+    
     const { email, isAdmin } = req.body;
+
 
     User.findOne({ email }).then(user => {
       
@@ -235,9 +231,20 @@ router.post(
       user.isAdmin = isAdmin;
       user.isAssistant = isAdmin;
 
+      
+
       //save
       user.save()
-      .then(user => res.json(user))
+      .then(user => {
+      
+        const userResult = {
+          id: user._id,
+          email: user.email,
+          name: user.name
+        }
+
+        res.json(userResult)
+      })
       .catch(err => console.log(err));
     });
   });

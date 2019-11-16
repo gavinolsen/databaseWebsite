@@ -2,32 +2,39 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-import { GET_ERRORS, SET_CURRENT_USER, CLEAR_USER } from './types';
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  CLEAR_USER,
+  SET_ADMIN,
+  ADD_ADMIN,
+  REMOVE_ADMIN
+} from './types';
 
-export const registerUser = (userData, history) => dispatch => {
+export const registerUser = (userData, history) => (dispatch) => {
   axios
     .post('/api/users/register', userData)
-    .then(res => history.push('/login'))
-    .catch(err =>
+    .then((res) => history.push('/login'))
+    .catch((err) =>
       //dispatch must have a type
       {
         if (err.response) {
           dispatch({
             type: GET_ERRORS,
-            payload: err.response.data
+            payload: err.response.data,
           });
         }
       }
     );
 };
 
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData) => (dispatch) => {
   //console.log('authorizing user');
 
   //console.log(userData);
   axios
     .post('/api/users/login', userData)
-    .then(res => {
+    .then((res) => {
       //save to local storage
       //extract it from param
 
@@ -46,11 +53,11 @@ export const loginUser = userData => dispatch => {
 
       dispatch(setCurrentUser(decoded, isAdmin, className));
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.response) {
         dispatch({
           type: GET_ERRORS,
-          payload: err.response.data
+          payload: err.response.data,
         });
       }
     });
@@ -62,16 +69,13 @@ export const setCurrentUser = (decoded, isAdmin, className) => {
     type: SET_CURRENT_USER,
     payload: decoded,
     isAdmin,
-    className
+    className,
   };
 };
 
-export const logoutUser = userData => dispatch => {
+export const logoutUser = (userData) => (dispatch) => {
   //remove the token from local storate
-  console.log('removing local token');
   localStorage.removeItem('jwtToken');
-  console.log('checking local token');
-  console.log(localStorage.getItem('jwtToken'));
   //remove the auth header for future requests
   //we made this in ../utils/setAuthToken.js
   setAuthToken(false);
@@ -83,19 +87,68 @@ export const logoutUser = userData => dispatch => {
 
   axios
     .post('/api/users/logout', userData)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: CLEAR_USER,
-        payload: {}
+        payload: {},
       });
 
       res.json(res);
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.response) {
         dispatch({
           type: GET_ERRORS,
-          payload: err.response.data
+          payload: err.response.data,
+        });
+      }
+    });
+};
+
+//{email, isAdmin}
+export const changeAdminStatus = ({ email, isAdmin }) => (dispatch) => {
+
+  const compiledData = { email, isAdmin };
+
+  axios
+    .post('/api/users/admin', compiledData)
+    .then((res) => {
+      if (isAdmin) {
+        dispatch({
+          type: ADD_ADMIN,
+          payload: res.data
+        });
+      } else {
+        dispatch({
+          type: REMOVE_ADMIN,
+          payload: res.data.id
+        });
+      }
+    })
+    .catch((err) => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data,
+        });
+      }
+    });
+};
+
+export const fetchAdmins = () => (dispatch) => {
+  axios
+    .get('api/users/admins')
+    .then((res) => {
+      dispatch({
+        type: SET_ADMIN,
+        payload: res.data.users,
+      });
+    })
+    .catch((err) => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data,
         });
       }
     });
