@@ -45,18 +45,18 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (!user) {
       errors.email = 'no user associated with that email';
       return res.status(404).json(errors);
     }
 
     //a user exists, so check the password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
         };
         //sign the token
         //the token expires in fourd days
@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
               success: true,
               token: 'Bearer ' + token,
               isAdmin: user.isAdmin,
-              className: user.className
+              className: user.className,
             });
           }
         );
@@ -86,7 +86,7 @@ router.post('/login', (req, res) => {
         //errors that I can see
 
         User.findOne({ email })
-          .then(user => {
+          .then((user) => {
             user.timesLoggedIn = user.timesLoggedIn + 1; //increment the number of requests
             user.isLoggedIn = true;
             // const today = {
@@ -94,9 +94,9 @@ router.post('/login', (req, res) => {
             // };
 
             // user.loginDates.push(today); //add the current date to the logins!!!
-            user.save().catch(err => console.log(err)); //save the user
+            user.save().catch((err) => console.log(err)); //save the user
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       } else {
         errors.password = 'incorrect password';
         return res.status(400).json(errors);
@@ -115,11 +115,11 @@ router.post('/logout', (req, res) => {
   //console.log(req.body);
 
   User.findById({ _id: req.body.id })
-    .then(user => {
+    .then((user) => {
       user.isLoggedIn = false;
-      user.save().catch(err => res.json(err)); //save the user
+      user.save().catch((err) => res.json(err)); //save the user
     })
-    .catch(err => res.json(err));
+    .catch((err) => res.json(err));
 });
 
 /**
@@ -133,7 +133,7 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       errors.email = 'email already exists';
       return res.status(400).json(errors);
@@ -144,7 +144,7 @@ router.post('/register', (req, res) => {
     //because validation just checks for errors
     const newUser = new User({
       name: req.body.name,
-      email: req.body.email
+      email: req.body.email,
     });
 
     //generate the users salt
@@ -155,8 +155,8 @@ router.post('/register', (req, res) => {
         //save the user
         newUser
           .save()
-          .then(user => res.json(user))
-          .catch(err => console.log(err));
+          .then((user) => res.json(user))
+          .catch((err) => console.log(err));
       });
     });
   });
@@ -173,7 +173,7 @@ router.delete(
   (req, res) => {
     const errors = {};
     User.findById(req.params.id)
-      .then(user => {
+      .then((user) => {
         //authenticate the user
         if (user._id.toString() !== req.user.id) {
           errors.notauthorized = 'user not authorized';
@@ -181,7 +181,7 @@ router.delete(
         }
         user.remove().then(() => res.json({ success: true }));
       })
-      .catch(err =>
+      .catch((err) =>
         res.status(404).json({ usernotfound: 'no user found with that id' })
       );
   }
@@ -201,7 +201,7 @@ router.get(
       name: req.user.name,
       email: req.user.email,
       className: req.user.className,
-      numberOfRequests: req.user.numberOfRequests
+      numberOfRequests: req.user.numberOfRequests,
     });
   }
 );
@@ -215,17 +215,29 @@ router.post(
   '/admin',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    
-    const { email, isAdmin } = req.body;
 
+
+    console.log('no user!');
+    const { errors, isValid } = validateAdminInput(req.body);
+
+    console.log('erros and isValid');
+    console.log(errors);
+    console.log(isValid);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    console.log('no user twice!');
+    const { email, isAdmin } = req.body;
 
     //maybe a good idea to change this
     // User.updateOne({ emi})
 
-    User.findOne({ email }).then(user => {
-      
+    User.findOne({ email }).then((user) => {
       //check if user exists
       if (!user) {
+        console.log('no user!');
         errors.email = 'There is no user associated with that email';
         return res.status(400).json(errors);
       }
@@ -234,25 +246,24 @@ router.post(
       user.isAdmin = isAdmin;
       user.isAssistant = isAdmin;
 
-      
-
       //save
-      user.save()
-      .then(user => {
-      
-        const userResult = {
-          id: user._id,
-          email: user.email,
-          name: user.name
-        }
+      user
+        .save()
+        .then((user) => {
+          const userResult = {
+            id: user._id,
+            email: user.email,
+            name: user.name,
+          };
 
-        res.json(userResult)
-      })
-      .catch(err => console.log(err));
+          res.json(userResult);
+        })
+        .catch((err) => console.log(err));
     });
-  });
+  }
+);
 
-  /**
+/**
  * @route   GET api/users/admins
  * @desc    get the admins
  * @access  Private
@@ -261,10 +272,15 @@ router.get(
   '/admins',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    User.find({ isAdmin: true }).then(users => {
-      const simplifiedUsers = users.map(user => ({id: user._id, name: user.name, email: user.email}));
-      res.json({users: simplifiedUsers});
+    User.find({ isAdmin: true }).then((users) => {
+      const simplifiedUsers = users.map((user) => ({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      }));
+      res.json({ users: simplifiedUsers });
     });
-  });
+  }
+);
 
 module.exports = router;

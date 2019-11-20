@@ -126,6 +126,8 @@ export const changeAdminStatus = ({ email, isAdmin }) => (dispatch) => {
       }
     })
     .catch((err) => {
+      console.log('there is an error!');
+      console.log(err.response.data);
       if (err.response) {
         dispatch({
           type: GET_ERRORS,
