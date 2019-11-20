@@ -26,7 +26,7 @@ class Dashboard extends Component {
           request help
         </Link>
         <hr className="my-4" />
-        
+
         <p>
           Hey I'm Gavin Olsen. My LinkedIn information is at the bottom of the
           page if you want to contact me.{' '}
@@ -49,7 +49,7 @@ class Dashboard extends Component {
           those are if you look around the code. I've really thought of this
           website as a playground, where not only I can learn, but you can learn
           as well if you're willing to work and search through the details. But
-          please don't screw it up, for the sake of the class :)
+          please don't mess it up, for the sake of the class :)
         </p>
         <p>
           thanks for being here, and let us know if there's anything we can do
