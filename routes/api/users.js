@@ -219,6 +219,9 @@ router.post(
     const { email, isAdmin } = req.body;
 
 
+    //maybe a good idea to change this
+    // User.updateOne({ emi})
+
     User.findOne({ email }).then(user => {
       
       //check if user exists
