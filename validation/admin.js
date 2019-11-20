@@ -16,11 +16,11 @@ module.exports = function validateAdminInput(data) {
   data.isAdmin = !isEmpty(data.isAdmin) ? data.isAdmin : '';
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = 'email field is required';
+    errors.email = 'Email field is required';
   }
 
   if (!Validator.isEmail(data.email)) {
-    errors.email = 'please enter a valid email';
+    errors.email = 'Please enter a valid email';
   }
 
   //in this json string,
