@@ -24,36 +24,13 @@ class Navbar extends Component {
     //otherwise, don't.
     const { isAuthenticated, user, isAdmin, className } = this.props.auth;
 
-    console.log('checking the token: ');
-    const token = localStorage.getItem('jwtToken');
-    console.log(this.props.auth);
-
-    console.log(token);
-
-    const userName = user.name;
-
-    const adminLinks = (
-      <li className="nav-item nav-link">
-        <Link
-          to="/stats"
-          style={{
-            color: 'gray',
-            fontSizeAdjust: '-moz-initial',
-            fontSize: '30px',
-          }}
-        >
-          stats
-        </Link>
-      </li>
-    );
-
     const studentContext = (
       <ul className="navbar-nav ml-auto">
         <li style={{marginRight: '30px', marginTop: '5px'}}>
           <Link
             to="/makerequest"
             style={{
-              color: 'gray',
+              color: 'white',
               fontSizeAdjust: '-moz-initial',
               fontSize: '30px',
             }}
@@ -73,7 +50,7 @@ class Navbar extends Component {
           <Link
             to="/requestlist"
             style={{
-              color: 'gray',
+              color: 'white',
               fontSizeAdjust: '-moz-initial',
               fontSize: '30px',
             }}
@@ -83,47 +60,6 @@ class Navbar extends Component {
         </li>
         <li>
           <AdminContext />
-        </li>
-      </ul>
-    )
-
-    //console.log(user);
-    //add
-    const authLinks = (
-      <ul className="navbar-nav ml-auto">
-        {isAdmin ? adminLinks : null}
-        <li className="nav-item nav-link">
-          <Link
-            to="/makerequest"
-            style={{
-              color: 'gray',
-              fontSizeAdjust: '-moz-initial',
-              fontSize: '30px',
-            }}
-          >
-            help
-          </Link>
-        </li>
-        <li className="nav-item nav-link">
-          <Link
-            to="/requestlist"
-            style={{
-              color: 'gray',
-              fontSizeAdjust: '-moz-initial',
-              fontSize: '30px',
-            }}
-          >
-            lists
-          </Link>
-        </li>
-        <li className="nav-item">
-          <a
-            href="/"
-            onClick={this.onLogoutClick.bind(this)}
-            className="nav-link"
-          >
-            Logout
-          </a>
         </li>
       </ul>
     );

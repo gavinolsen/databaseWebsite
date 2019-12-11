@@ -31,10 +31,22 @@ class AdminContext extends Component {
               style={{
                 color: 'gray',
                 fontSizeAdjust: '-moz-initial',
-                fontSize: '30px',
+                fontSize: '20px',
               }}
             >
               Roles
+            </Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+          <Link
+              to="/stats"
+              style={{
+                color: 'gray',
+                fontSizeAdjust: '-moz-initial',
+                fontSize: '20px',
+              }}
+            >
+              Stats
             </Link>
           </Dropdown.Item>
           <Dropdown.Item>
@@ -42,7 +54,7 @@ class AdminContext extends Component {
               to="/makerequest"
               style={{
                 color: 'gray',
-                fontSize: '30px',
+                fontSize: '20px',
               }}
             >
               Help
@@ -53,7 +65,7 @@ class AdminContext extends Component {
               to="/howto"
               style={{
                 color: 'gray',
-                fontSize: '30px',
+                fontSize: '20px',
               }}
             >
               How to
@@ -64,7 +76,7 @@ class AdminContext extends Component {
               to="/login"
               style={{
                 color: 'gray',
-                fontSize: '30px',
+                fontSize: '20px',
               }}
             >
               Logout

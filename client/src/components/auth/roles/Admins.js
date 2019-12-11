@@ -80,9 +80,9 @@ class Admins extends Component {
               <tr>
                 <td>
                   <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <h3 style={{ marginRight: '50px', marginTop: '10px' }}>
+                    <h4 style={{ marginRight: '50px', marginTop: '10px' }}>
                       Enter a students email:{' '}
-                    </h3>
+                    </h4>
                     <TextFieldGroup
                       placeholder="email"
                       name="email"

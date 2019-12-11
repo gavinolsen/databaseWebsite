@@ -41,6 +41,16 @@ class Register extends Component {
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+
+    console.log('changing')
+    if (event.target.name === 'password' || event.target.name === 'password2') {
+      this.setState({errors: {}})
+
+      const opposite = event.target.name === 'password' ? this.state.password2 : this.state.password
+      if ((event.target.value === opposite) && (event.target.value.length > 6)) {
+        console.log('good password')
+      }
+    }
   };
 
   onSubmit = event => {
