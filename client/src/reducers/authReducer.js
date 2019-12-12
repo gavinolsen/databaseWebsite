@@ -15,6 +15,8 @@ const initalState = {
   isAuthenticated: false,
   isAdmin: false,
   className: '',
+  email: '',
+  password: '',
   user: {},
   admins: [],
 };

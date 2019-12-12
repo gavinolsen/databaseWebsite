@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
-import {setCurrentUser, logoutUser} from './actions/authActions';
+import {setCurrentUser, logoutUser, checkCurrentUser} from './actions/authActions';
 
 import {Provider} from 'react-redux';
 import store from './store';
@@ -30,8 +30,8 @@ import Stats225 from './components/stats/Stats225';
 import Stats325 from './components/stats/Stats325';
 import Admins from './components/auth/roles/Admins';
 
-console.log('what is the token?');
-console.log(localStorage.getItem('jwtToken'));
+console.log('running in app js. time to reauthenticate!');
+store.dispatch(checkCurrentUser());
 
 if (localStorage.getItem('jwtToken') !== null) {
   //set the auth header token

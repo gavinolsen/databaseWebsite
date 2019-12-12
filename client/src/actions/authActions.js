@@ -36,10 +36,7 @@ export const loginUser = (userData) => (dispatch) => {
     .post('/api/users/login', userData)
     .then((res) => {
       //save to local storage
-      //extract it from param
-
-      //console.log('authorizing user');
-      //console.log(res.data);
+      //extract it from para
 
       const { token, isAdmin, className } = res.data;
 
@@ -50,7 +47,9 @@ export const loginUser = (userData) => (dispatch) => {
       //decode token to get user data
       const decoded = jwt_decode(token);
       //set current user
-
+      if (res.data.isAdmin) {
+        sessionStorage.setItem('schoolQueue74764738286382878', res.data.isAdmin);
+      }
       dispatch(setCurrentUser(decoded, isAdmin, className));
     })
     .catch((err) => {
@@ -61,6 +60,15 @@ export const loginUser = (userData) => (dispatch) => {
         });
       }
     });
+};
+
+export const checkCurrentUser = () => (dispatch) => {
+  console.log('checking current user from authActions');
+  const isAdmin = sessionStorage.getItem('schoolQueue74764738286382878');
+  if (!isAdmin) {
+    return;
+  }
+  dispatch(setCurrentUser(null, isAdmin));
 };
 
 //set logged in user
