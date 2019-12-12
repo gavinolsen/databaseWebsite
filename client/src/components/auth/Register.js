@@ -17,6 +17,7 @@ class Register extends Component {
       className: '',
       password: '',
       password2: '',
+      match: '',
       errors: {}
     };
 
@@ -46,9 +47,12 @@ class Register extends Component {
     if (event.target.name === 'password' || event.target.name === 'password2') {
       this.setState({errors: {}})
 
+      //we need to check the opposite of whichever we currently have
       const opposite = event.target.name === 'password' ? this.state.password2 : this.state.password
       if ((event.target.value === opposite) && (event.target.value.length > 6)) {
-        console.log('good password')
+        this.setState({match: 'Passwords verified'})
+      } else {
+        this.setState({match: ''})
       }
     }
   };
@@ -136,6 +140,7 @@ class Register extends Component {
                   value={this.state.password2}
                   onChange={this.onChange}
                   error={errors.password2}
+                  match={this.state.match}
                 />
                 <input
                   type='submit'

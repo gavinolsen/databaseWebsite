@@ -7,6 +7,7 @@ const TextFieldGroup = ({
   value,
   label,
   error,
+  match,
   info,
   type,
   onChange,
@@ -28,6 +29,7 @@ const TextFieldGroup = ({
 
       {info && <small className='form-text text-muted'> {info} </small>}
       {error && <div className='invalid-feedback'>{error} </div>}
+      {match && <div style={{fontSize: '12px', color: 'green'}}>{match}</div>}
     </div>
   );
 };
@@ -38,6 +40,7 @@ TextFieldGroup.propTypes = {
   value: PropTypes.string.isRequired,
   info: PropTypes.string,
   error: PropTypes.string,
+  match: PropTypes.string,
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.string
